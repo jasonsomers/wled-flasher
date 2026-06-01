@@ -1,0 +1,15 @@
+{
+  "name": "Tetra2Go v0.15.0 + Diff",
+  "version": "0.15.0",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        { "path": "../esp32-common/bootloader.bin", "offset": 4096 },
+        { "path": "../esp32-common/partitions.bin", "offset": 32768 },
+        { "path": "../esp32-common/boot_app0.bin",  "offset": 57344 },
+        { "path": "WLED_0.15.0_Tetra2Go-Diff.bin", "offset": 65536 }
+      ]
+    }
+  ]
+}
