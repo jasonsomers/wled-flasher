@@ -1,0 +1,12 @@
+{
+  "name": "Duo2Go v2 v0.15.0",
+  "version": "0.15.0",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        { "path": "WLED_0.15.0_Duo2Go-v2.bin", "offset": 0 }
+      ]
+    }
+  ]
+}

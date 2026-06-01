@@ -289,6 +289,7 @@
       <select id="controller" onchange="updateVersions()">
         <option value="solo2go">Solo2Go</option>
         <option value="duo2go_v1">Duo2Go (Rev 1)</option>
+        <option value="duo2go_v2">Duo2Go (Rev 2)</option>
       </select>
     </div>
     <div>
@@ -372,7 +373,21 @@
       },
       hasAddons: true,
     },
-    duo2go_v1: {
+    duo2go_v2: {
+      versions: [
+        { value: "16.0.0",      label: "16.0.0 — Latest" },
+        { value: "16.0.0-dmx",  label: "16.0.0 + DMX" },
+        { value: "0.15.4",      label: "0.15.4" },
+        { value: "0.15.4-dmx",  label: "0.15.4 + DMX" },
+        { value: "0.15.3",      label: "0.15.3" },
+        { value: "0.15.3-dmx",  label: "0.15.3 + DMX" },
+        { value: "0.15.1",      label: "0.15.1" },
+        { value: "0.15.0",      label: "0.15.0" },
+        { value: "0.14.4",      label: "0.14.4" },
+      ],
+      availability: {},
+      hasAddons: false,
+    },
       versions: [
         { value: "0.15.1-160", label: "0.15.1 (160MHz) — Recommended" },
         { value: "0.15.0-160", label: "0.15.0 (160MHz)" },
@@ -408,6 +423,21 @@
         'oled':    `WLED_${ver}_Solo2Go-OLED.bin`,
       };
       return { manifest: `bins/solo2go/manifest_${ver}_${key}.json`, filename: filemap[key] || '' };
+    },
+    duo2go_v2: (ver) => {
+      const filemap = {
+        "16.0.0":     { f: "WLED_16.0.0_Duo2Go-v2.bin",  m: "manifest_16.0.0_base.json" },
+        "16.0.0-dmx": { f: "WLED_16.0.0_Duo2Go-DMX.bin", m: "manifest_16.0.0_dmx.json" },
+        "0.15.4":     { f: "WLED_0.15.4_Duo2Go-v2.bin",  m: "manifest_0.15.4_base.json" },
+        "0.15.4-dmx": { f: "WLED_0.15.4_Duo2Go-DMX.bin", m: "manifest_0.15.4_dmx.json" },
+        "0.15.3":     { f: "WLED_0.15.3_Duo2Go-v2.bin",  m: "manifest_0.15.3_base.json" },
+        "0.15.3-dmx": { f: "WLED_0.15.3_Duo2Go-DMX.bin", m: "manifest_0.15.3_dmx.json" },
+        "0.15.1":     { f: "WLED_0.15.1_Duo2Go-v2.bin",  m: "manifest_0.15.1_base.json" },
+        "0.15.0":     { f: "WLED_0.15.0_Duo2Go-v2.bin",  m: "manifest_0.15.0_base.json" },
+        "0.14.4":     { f: "WLED_0.14.4_Duo2Go-v2.bin",  m: "manifest_0.14.4_base.json" },
+      };
+      const entry = filemap[ver] || {};
+      return { manifest: `bins/duo2go_v2/${entry.m}`, filename: entry.f || '' };
     },
     duo2go_v1: (ver) => {
       const filemap = {

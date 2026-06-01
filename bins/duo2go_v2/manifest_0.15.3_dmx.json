@@ -1,0 +1,12 @@
+{
+  "name": "Duo2Go v2 v0.15.3 + DMX",
+  "version": "0.15.3",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        { "path": "WLED_0.15.3_Duo2Go-DMX.bin", "offset": 0 }
+      ]
+    }
+  ]
+}
