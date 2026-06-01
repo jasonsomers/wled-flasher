@@ -392,6 +392,8 @@
       hasAddons: true,
     },
     duo2go_v2: {
+      versions: [
+        { value: "16.0.0",      label: "16.0.0 — Latest" },
         { value: "16.0.0-dmx",  label: "16.0.0 + DMX" },
         { value: "0.15.4",      label: "0.15.4" },
         { value: "0.15.4-dmx",  label: "0.15.4 + DMX" },
@@ -488,12 +490,34 @@
   function toggleAddon(el) {
     const addon = el.dataset.addon;
     if (el.classList.contains('unavailable')) return;
+
     if (!selected.has(addon)) {
+      // Check if DMX is available for current controller/version
+      const dmxAvailable = !document.querySelector('[data-addon="dmx"]').classList.contains('unavailable');
+
+      // OLED and Diff are always fully exclusive
       if (addon === 'oled' || addon === 'diff') {
         selected.clear();
         document.querySelectorAll('.addon-chip').forEach(c => c.classList.remove('selected'));
       }
-      if (addon === 'eth' || addon === 'dmx') {
+      // ETH is exclusive unless DMX is also available (eth+dmx combo)
+      if (addon === 'eth') {
+        if (!dmxAvailable) {
+          // No DMX available — eth is fully exclusive
+          selected.clear();
+          document.querySelectorAll('.addon-chip').forEach(c => c.classList.remove('selected'));
+        } else {
+          // DMX available — eth can pair with dmx, but clear oled/diff
+          ['oled','diff'].forEach(x => {
+            if (selected.has(x)) {
+              selected.delete(x);
+              document.querySelector(`[data-addon="${x}"]`).classList.remove('selected');
+            }
+          });
+        }
+      }
+      // DMX: clear oled/diff if present; eth can stay
+      if (addon === 'dmx') {
         ['oled','diff'].forEach(x => {
           if (selected.has(x)) {
             selected.delete(x);
