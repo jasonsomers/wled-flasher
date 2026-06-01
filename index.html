@@ -288,6 +288,7 @@
       <label for="controller">Controller</label>
       <select id="controller" onchange="updateVersions()">
         <option value="solo2go">Solo2Go</option>
+        <option value="duo2go_v1">Duo2Go (Rev 1)</option>
       </select>
     </div>
     <div>
@@ -303,8 +304,7 @@
   </div>
 </div>
 
-<div class="card">
-  <p class="card-label">Step 2 &mdash; Select Add-on Modules (optional)</p>
+<div class="card addons">
   <div class="addon-grid" id="addonGrid">
     <div class="addon-chip" data-addon="oled" onclick="toggleAddon(this)">
       <span class="addon-dot"></span>OLED Display
@@ -348,17 +348,78 @@
 <div class="rgb-rule"></div>
 
 <footer>
-  <span>&copy; 2026 <a href="https://rgb2go.com" target="_blank">RGB2Go</a></span>
+  <span>&copy; 2024 <a href="https://rgb2go.com" target="_blank">RGB2Go</a></span>
   <span>Powered by <a href="https://esphome.github.io/esp-web-tools/" target="_blank">ESP Web Tools</a></span>
 </footer>
 
 <script>
-  const availability = {
-    "16.0.0": ["oled","eth","diff","dmx"],
-    "0.15.4": ["oled","eth","diff","dmx"],
-    "0.15.3": ["oled","eth","dmx"],
-    "0.15.1": ["eth","dmx"],
-    "0.15.0": ["eth","dmx"],
+  // Per-controller version lists
+  const controllers = {
+    solo2go: {
+      versions: [
+        { value: "16.0.0", label: "16.0.0 — Latest" },
+        { value: "0.15.4", label: "0.15.4" },
+        { value: "0.15.3", label: "0.15.3" },
+        { value: "0.15.1", label: "0.15.1" },
+        { value: "0.15.0", label: "0.15.0" },
+      ],
+      availability: {
+        "16.0.0": ["oled","eth","diff","dmx"],
+        "0.15.4": ["oled","eth","diff","dmx"],
+        "0.15.3": ["oled","eth","dmx"],
+        "0.15.1": ["eth","dmx"],
+        "0.15.0": ["eth","dmx"],
+      },
+      hasAddons: true,
+    },
+    duo2go_v1: {
+      versions: [
+        { value: "0.15.1-160", label: "0.15.1 (160MHz) — Recommended" },
+        { value: "0.15.0-160", label: "0.15.0 (160MHz)" },
+        { value: "0.14.4-160", label: "0.14.4 (160MHz)" },
+        { value: "0.14.4",     label: "0.14.4" },
+        { value: "0.13",       label: "0.13" },
+      ],
+      availability: {},
+      hasAddons: false,
+    },
+  };
+
+  // Manifest resolution per controller
+  const manifests = {
+    solo2go: (ver, addons) => {
+      const hasEth  = addons.has('eth');
+      const hasDmx  = addons.has('dmx');
+      const hasOled = addons.has('oled');
+      const hasDiff = addons.has('diff');
+      let key;
+      if (hasEth && hasDmx) key = 'eth-dmx';
+      else if (hasEth)      key = 'eth';
+      else if (hasDiff)     key = 'diff';
+      else if (hasDmx)      key = 'dmx';
+      else if (hasOled)     key = 'oled';
+      else                  key = 'base';
+      const filemap = {
+        'base':    `WLED_${ver}_Solo2Go.bin`,
+        'dmx':     `WLED_${ver}_Solo2Go-DMX.bin`,
+        'eth':     `WLED_${ver}_Solo2Go-Eth.bin`,
+        'eth-dmx': `WLED_${ver}_Solo2Go-Eth-DMX.bin`,
+        'diff':    `WLED_${ver}_Solo2Go-Diff.bin`,
+        'oled':    `WLED_${ver}_Solo2Go-OLED.bin`,
+      };
+      return { manifest: `bins/solo2go/manifest_${ver}_${key}.json`, filename: filemap[key] || '' };
+    },
+    duo2go_v1: (ver) => {
+      const filemap = {
+        "0.15.1-160": { f: "WLED_0.15.1_Duo2Go-160.bin", m: "manifest_0.15.1_160.json" },
+        "0.15.0-160": { f: "WLED_0.15.0_Duo2Go-160.bin", m: "manifest_0.15.0_160.json" },
+        "0.14.4-160": { f: "WLED_0.14.4_Duo2Go_160.bin", m: "manifest_0.14.4_160.json" },
+        "0.14.4":     { f: "WLED_0.14.4_Duo2Go.bin",     m: "manifest_0.14.4_base.json" },
+        "0.13":       { f: "WLED_0.13_Duo.bin",           m: "manifest_0.13_base.json" },
+      };
+      const entry = filemap[ver] || {};
+      return { manifest: `bins/duo2go_v1/${entry.m}`, filename: entry.f || '' };
+    },
   };
 
   const selected = new Set();
@@ -366,33 +427,48 @@
   function toggleAddon(el) {
     const addon = el.dataset.addon;
     if (el.classList.contains('unavailable')) return;
-    if (addon === 'eth' && selected.has('diff')) {
-      selected.delete('diff');
-      document.querySelector('[data-addon="diff"]').classList.remove('selected');
-    }
-    if (addon === 'diff' && selected.has('eth')) {
-      selected.delete('eth');
-      document.querySelector('[data-addon="eth"]').classList.remove('selected');
-    }
-    if (selected.has(addon)) {
-      selected.delete(addon);
-      el.classList.remove('selected');
-    } else {
+    if (!selected.has(addon)) {
+      if (addon === 'oled' || addon === 'diff') {
+        selected.clear();
+        document.querySelectorAll('.addon-chip').forEach(c => c.classList.remove('selected'));
+      }
+      if (addon === 'eth' || addon === 'dmx') {
+        ['oled','diff'].forEach(x => {
+          if (selected.has(x)) {
+            selected.delete(x);
+            document.querySelector(`[data-addon="${x}"]`).classList.remove('selected');
+          }
+        });
+      }
       selected.add(addon);
       el.classList.add('selected');
+    } else {
+      selected.delete(addon);
+      el.classList.remove('selected');
     }
     updateManifest();
   }
 
   function updateVersions() {
+    const ctrl = document.getElementById('controller').value;
+    const config = controllers[ctrl];
+    const verSelect = document.getElementById('version');
+    verSelect.innerHTML = config.versions
+      .map(v => `<option value="${v.value}">${v.label}</option>`)
+      .join('');
+
+    // Show/hide addon section
+    document.querySelector('.card.addons').style.display = config.hasAddons ? '' : 'none';
+
     selected.clear();
     document.querySelectorAll('.addon-chip').forEach(c => c.classList.remove('selected'));
     updateAddons();
   }
 
   function updateAddons() {
-    const ver = document.getElementById('version').value;
-    const avail = availability[ver] || [];
+    const ctrl = document.getElementById('controller').value;
+    const ver  = document.getElementById('version').value;
+    const avail = (controllers[ctrl].availability || {})[ver] || [];
     selected.clear();
     document.querySelectorAll('.addon-chip').forEach(chip => {
       chip.classList.remove('selected');
@@ -401,40 +477,16 @@
     updateManifest();
   }
 
-  function resolveManifest(ver, addons) {
-    const hasEth  = addons.has('eth');
-    const hasDmx  = addons.has('dmx');
-    const hasOled = addons.has('oled');
-    const hasDiff = addons.has('diff');
-    let key;
-    if (hasEth && hasDmx) key = 'eth-dmx';
-    else if (hasEth)      key = 'eth';
-    else if (hasDiff)     key = 'diff';
-    else if (hasDmx)      key = 'dmx';
-    else if (hasOled)     key = 'oled';
-    else                  key = 'base';
-    const filemap = {
-      'base':    `WLED_${ver}_Solo2Go.bin`,
-      'dmx':     `WLED_${ver}_Solo2Go-DMX.bin`,
-      'eth':     `WLED_${ver}_Solo2Go-Eth.bin`,
-      'eth-dmx': `WLED_${ver}_Solo2Go-Eth-DMX.bin`,
-      'diff':    `WLED_${ver}_Solo2Go-Diff.bin`,
-      'oled':    `WLED_${ver}_Solo2Go-OLED.bin`,
-    };
-    return {
-      manifest: `bins/solo2go/manifest_${ver}_${key}.json`,
-      filename: filemap[key] || ''
-    };
-  }
-
   function updateManifest() {
-    const ver = document.getElementById('version').value;
-    const { manifest, filename } = resolveManifest(ver, selected);
+    const ctrl = document.getElementById('controller').value;
+    const ver  = document.getElementById('version').value;
+    const { manifest, filename } = manifests[ctrl](ver, selected);
     document.getElementById('flashBtn').setAttribute('manifest', manifest);
     document.getElementById('fwName').textContent = filename;
   }
 
-  updateAddons();
+  // Init
+  updateVersions();
 </script>
 </body>
 </html>
