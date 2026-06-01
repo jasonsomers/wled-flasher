@@ -1,0 +1,12 @@
+{
+  "name": "Solo2Go v0.15.4",
+  "version": "0.15.4",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        { "path": "WLED_0.15.4_Solo2Go.bin", "offset": 0 }
+      ]
+    }
+  ]
+}

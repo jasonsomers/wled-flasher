@@ -1,0 +1,12 @@
+{
+  "name": "Solo2Go v0.15.0 + DMX",
+  "version": "0.15.0",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        { "path": "WLED_0.15.0_Solo2Go-DMX.bin", "offset": 0 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Solo2Go v16.0.0 + OLED",
+  "version": "16.0.0",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        { "path": "WLED_16.0.0_Solo2Go-OLED.bin", "offset": 0 }
+      ]
+    }
+  ]
+}

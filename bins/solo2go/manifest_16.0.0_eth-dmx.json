@@ -1,0 +1,12 @@
+{
+  "name": "Solo2Go v16.0.0 + Ethernet + DMX",
+  "version": "16.0.0",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        { "path": "WLED_16.0.0_Solo2Go-Eth-DMX.bin", "offset": 0 }
+      ]
+    }
+  ]
+}

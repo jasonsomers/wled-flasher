@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RGB2Go WLED Flasher</title>
+  <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       #0a0a0b;
+      --surface:  #111114;
+      --border:   #222228;
+      --accent:   #ff4d00;
+      --accent2:  #ff9500;
+      --text:     #e8e8ea;
+      --muted:    #666674;
+      --success:  #00e87a;
+      --mono:     'DM Mono', monospace;
+      --sans:     'DM Sans', sans-serif;
+      --display:  'Bebas Neue', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 1rem 4rem;
+    }
+
+    /* Background grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Glow */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(255,77,0,0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 680px;
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .brand {
+      font-family: var(--display);
+      font-size: 3.5rem;
+      letter-spacing: 0.04em;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .brand-sub {
+      font-family: var(--display);
+      font-size: 3.5rem;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .tagline {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 680px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .selector-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .selector-full {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.7rem;
+      font-family: var(--mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    select {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 0.875rem;
+      padding: 0.65rem 0.85rem;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666674' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.85rem center;
+      transition: border-color 0.15s;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    select:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .addon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .addon-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+      user-select: none;
+    }
+
+    .addon-chip:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .addon-chip.selected {
+      border-color: var(--accent);
+      background: rgba(255,77,0,0.08);
+      color: var(--text);
+    }
+
+    .addon-chip.unavailable {
+      opacity: 0.25;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .addon-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+
+    .addon-chip.selected .addon-dot {
+      background: var(--accent);
+    }
+
+    .firmware-preview {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      padding: 0.75rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .firmware-preview .fw-label {
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .firmware-preview .fw-name {
+      color: var(--text);
+      word-break: break-all;
+    }
+
+    .flash-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    esp-web-install-button {
+      --esp-tools-button-color: var(--accent);
+      --esp-tools-button-text-color: #fff;
+    }
+
+    esp-web-install-button::part(button) {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 2px;
+      font-family: var(--display);
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      padding: 0.75rem 2rem;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+
+    esp-web-install-button::part(button):hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    .flash-note {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .flash-note a {
+      color: var(--accent2);
+      text-decoration: none;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .info-cell {
+      background: var(--bg);
+      padding: 1rem;
+    }
+
+    .info-cell dt {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .info-cell dd {
+      font-size: 0.875rem;
+      color: var(--text);
+    }
+
+    .addon-desc {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.7;
+      padding: 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+    }
+
+    .addon-desc strong {
+      color: var(--accent2);
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 680px;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer span {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    footer a {
+      color: var(--accent2);
+      text-decoration: none;
+    }
+
+    @media (max-width: 520px) {
+      .selector-row { grid-template-columns: 1fr; }
+      .info-grid { grid-template-columns: 1fr; }
+      .brand, .brand-sub { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-row">
+    <span class="brand">RGB2Go</span>
+    <span class="brand-sub">&nbsp;WLED Flasher</span>
+  </div>
+  <p class="tagline">Browser-based firmware installer &mdash; Chrome / Edge only</p>
+</header>
+
+<div class="card">
+  <p class="card-label">// 01 &mdash; Select Controller &amp; Version</p>
+
+  <div class="selector-row">
+    <div>
+      <label for="controller">Controller</label>
+      <select id="controller" onchange="updateVersions()">
+        <option value="solo2go">Solo2Go</option>
+        <!-- Future: Matrix2Go, Duo2Go, Tetra2Go, Octa2Go -->
+      </select>
+    </div>
+    <div>
+      <label for="version">Firmware Version</label>
+      <select id="version" onchange="updateAddons()">
+        <option value="16.0.0">16.0.0 (Latest)</option>
+        <option value="0.15.4">0.15.4</option>
+        <option value="0.15.3">0.15.3</option>
+        <option value="0.15.1">0.15.1</option>
+        <option value="0.15.0">0.15.0</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <p class="card-label">// 02 &mdash; Select Add-on Modules</p>
+
+  <div class="addon-grid" id="addonGrid">
+    <div class="addon-chip" data-addon="oled" onclick="toggleAddon(this)">
+      <span class="addon-dot"></span>OLED Display
+    </div>
+    <div class="addon-chip" data-addon="eth" onclick="toggleAddon(this)">
+      <span class="addon-dot"></span>Ethernet
+    </div>
+    <div class="addon-chip" data-addon="diff" onclick="toggleAddon(this)">
+      <span class="addon-dot"></span>Differential
+    </div>
+    <div class="addon-chip" data-addon="dmx" onclick="toggleAddon(this)">
+      <span class="addon-dot"></span>DMX Output
+    </div>
+  </div>
+
+  <div class="addon-desc">
+    <strong>OLED</strong> — Adds support for an OLED status display.<br>
+    <strong>Ethernet</strong> — Adds support for a wired Ethernet module.<br>
+    <strong>Differential</strong> — Adds 4 extra outputs via a Differential Receiver module.<br>
+    <strong>DMX</strong> — Adds support for a Pixel-to-DMX adapter. Can be combined with Ethernet.
+  </div>
+</div>
+
+<div class="card">
+  <p class="card-label">// 03 &mdash; Flash</p>
+
+  <div class="firmware-preview" id="fwPreview">
+    <span class="fw-label">FILE</span>
+    <span class="fw-name" id="fwName">—</span>
+  </div>
+
+  <div class="flash-row">
+    <esp-web-install-button id="flashBtn" manifest="">
+      <button slot="activate">Connect &amp; Flash</button>
+    </esp-web-install-button>
+    <div class="flash-note">
+      Plug in your controller via a <strong>data</strong> USB cable.<br>
+      Select the COM port when prompted.<br>
+      <a href="https://rgb2go.com/pages/flashing-wled-firmware" target="_blank">Need drivers? →</a>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <p class="card-label">// Info</p>
+  <div class="info-grid">
+    <div class="info-cell">
+      <dt>Chip</dt>
+      <dd>ESP32</dd>
+    </div>
+    <div class="info-cell">
+      <dt>Flash Size</dt>
+      <dd>4 MB</dd>
+    </div>
+    <div class="info-cell">
+      <dt>Browser Required</dt>
+      <dd>Chrome or Edge</dd>
+    </div>
+    <div class="info-cell">
+      <dt>Protocol</dt>
+      <dd>WebSerial (USB)</dd>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>&copy; 2024 RGB2Go &mdash; <a href="https://rgb2go.com" target="_blank">rgb2go.com</a></span>
+  <span>Powered by <a href="https://esphome.github.io/esp-web-tools/" target="_blank">ESP Web Tools</a></span>
+</footer>
+
+<script>
+  // Addon availability per version
+  const availability = {
+    "16.0.0": ["oled","eth","diff","dmx"],
+    "0.15.4": ["oled","eth","diff","dmx"],
+    "0.15.3": ["oled","eth","dmx"],
+    "0.15.1": ["eth","dmx"],
+    "0.15.0": ["eth","dmx"],
+  };
+
+  // Mutually exclusive pairs
+  // eth + diff can't coexist; eth-dmx is a combined manifest
+  const selected = new Set();
+
+  function toggleAddon(el) {
+    const addon = el.dataset.addon;
+    if (el.classList.contains('unavailable')) return;
+
+    // eth and diff are mutually exclusive
+    if (addon === 'eth' && selected.has('diff')) {
+      selected.delete('diff');
+      document.querySelector('[data-addon="diff"]').classList.remove('selected');
+    }
+    if (addon === 'diff' && selected.has('eth')) {
+      selected.delete('eth');
+      document.querySelector('[data-addon="eth"]').classList.remove('selected');
+    }
+
+    if (selected.has(addon)) {
+      selected.delete(addon);
+      el.classList.remove('selected');
+    } else {
+      selected.add(addon);
+      el.classList.add('selected');
+    }
+    updateManifest();
+  }
+
+  function updateVersions() {
+    // Reserved for when more controllers are added
+    selected.clear();
+    document.querySelectorAll('.addon-chip').forEach(c => c.classList.remove('selected'));
+    updateAddons();
+  }
+
+  function updateAddons() {
+    const ver = document.getElementById('version').value;
+    const avail = availability[ver] || [];
+    selected.clear();
+    document.querySelectorAll('.addon-chip').forEach(chip => {
+      chip.classList.remove('selected');
+      if (avail.includes(chip.dataset.addon)) {
+        chip.classList.remove('unavailable');
+      } else {
+        chip.classList.add('unavailable');
+      }
+    });
+    updateManifest();
+  }
+
+  function resolveManifest(ver, addons) {
+    // Determine which manifest file to use
+    const hasEth  = addons.has('eth');
+    const hasDmx  = addons.has('dmx');
+    const hasOled = addons.has('oled');
+    const hasDiff = addons.has('diff');
+
+    let key;
+    if (hasEth && hasDmx) key = 'eth-dmx';
+    else if (hasEth)      key = 'eth';
+    else if (hasDiff)     key = 'diff';
+    else if (hasDmx)      key = 'dmx';
+    else if (hasOled)     key = 'oled';
+    else                  key = 'base';
+
+    return {
+      manifest: `bins/solo2go/manifest_${ver}_${key}.json`,
+      filename: manifestToFilename(ver, key)
+    };
+  }
+
+  function manifestToFilename(ver, key) {
+    const map = {
+      'base':    `WLED_${ver}_Solo2Go.bin`,
+      'dmx':     `WLED_${ver}_Solo2Go-DMX.bin`,
+      'eth':     `WLED_${ver}_Solo2Go-Eth.bin`,
+      'eth-dmx': `WLED_${ver}_Solo2Go-Eth-DMX.bin`,
+      'diff':    `WLED_${ver}_Solo2Go-Diff.bin`,
+      'oled':    `WLED_${ver}_Solo2Go-OLED.bin`,
+    };
+    return map[key] || '';
+  }
+
+  function updateManifest() {
+    const ver = document.getElementById('version').value;
+    const { manifest, filename } = resolveManifest(ver, selected);
+
+    document.getElementById('flashBtn').setAttribute('manifest', manifest);
+    document.getElementById('fwName').textContent = filename;
+  }
+
+  // Init
+  updateAddons();
+</script>
+
+</body>
+</html>
