@@ -290,6 +290,7 @@
         <option value="solo2go">Solo2Go</option>
         <option value="duo2go_v1">Duo2Go (Rev 1)</option>
         <option value="duo2go_v2">Duo2Go (Rev 2)</option>
+        <option value="tetra2go">Tetra2Go</option>
       </select>
     </div>
     <div>
@@ -373,9 +374,24 @@
       },
       hasAddons: true,
     },
-    duo2go_v2: {
+    tetra2go: {
       versions: [
-        { value: "16.0.0",      label: "16.0.0 — Latest" },
+        { value: "16.0.0", label: "16.0.0 — Latest" },
+        { value: "0.15.4", label: "0.15.4" },
+        { value: "0.15.3", label: "0.15.3" },
+        { value: "0.15.1", label: "0.15.1" },
+        { value: "0.15.0", label: "0.15.0" },
+      ],
+      availability: {
+        "16.0.0": ["oled","eth","diff"],
+        "0.15.4": ["oled","eth","diff"],
+        "0.15.3": ["oled","eth","diff"],
+        "0.15.1": ["oled","eth","diff"],
+        "0.15.0": ["oled","eth","diff"],
+      },
+      hasAddons: true,
+    },
+    duo2go_v2: {
         { value: "16.0.0-dmx",  label: "16.0.0 + DMX" },
         { value: "0.15.4",      label: "0.15.4" },
         { value: "0.15.4-dmx",  label: "0.15.4 + DMX" },
@@ -403,6 +419,20 @@
 
   // Manifest resolution per controller
   const manifests = {
+    tetra2go: (ver, addons) => {
+      let key;
+      if (addons.has('diff'))      key = 'diff';
+      else if (addons.has('eth'))  key = 'eth';
+      else if (addons.has('oled')) key = 'oled';
+      else                         key = 'base';
+      const filemap = {
+        'base': `WLED_${ver}_Tetra2Go.bin`,
+        'diff': `WLED_${ver}_Tetra2Go-Diff.bin`,
+        'eth':  `WLED_${ver}_Tetra2Go-Eth.bin`,
+        'oled': `WLED_${ver}_Tetra2Go-OLED.bin`,
+      };
+      return { manifest: `bins/tetra2go/manifest_${ver}_${key}.json`, filename: filemap[key] || '' };
+    },
     solo2go: (ver, addons) => {
       const hasEth  = addons.has('eth');
       const hasDmx  = addons.has('dmx');
