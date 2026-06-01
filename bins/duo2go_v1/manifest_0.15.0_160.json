@@ -1,0 +1,12 @@
+{
+  "name": "Duo2Go v1 v0.15.0 (160MHz)",
+  "version": "0.15.0",
+  "builds": [
+    {
+      "chipFamily": "ESP8266",
+      "parts": [
+        { "path": "WLED_0.15.0_Duo2Go-160.bin", "offset": 0 }
+      ]
+    }
+  ]
+}
