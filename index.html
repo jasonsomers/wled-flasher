@@ -288,8 +288,8 @@
       <label for="controller">Controller</label>
       <select id="controller" onchange="updateVersions()">
         <option value="solo2go">Solo2Go</option>
-        <option value="duo2go_v1">Duo2Go (Rev 1)</option>
-        <option value="duo2go_v2">Duo2Go (Rev 2)</option>
+        <option value="duo2go_v1">Duo2Go (Rev 1) — ESP8266</option>
+        <option value="duo2go_v2">Duo2Go (Rev 2) — ESP32</option>
         <option value="tetra2go">Tetra2Go</option>
         <option value="octa2go">Octa2Go</option>
         <option value="matrix2go">Matrix2Go</option>
@@ -419,18 +419,22 @@
     },
     duo2go_v2: {
       versions: [
-        { value: "16.0.0",      label: "16.0.0 — Latest" },
-        { value: "16.0.0-dmx",  label: "16.0.0 + DMX" },
-        { value: "0.15.4",      label: "0.15.4" },
-        { value: "0.15.4-dmx",  label: "0.15.4 + DMX" },
-        { value: "0.15.3",      label: "0.15.3" },
-        { value: "0.15.3-dmx",  label: "0.15.3 + DMX" },
-        { value: "0.15.1",      label: "0.15.1" },
-        { value: "0.15.0",      label: "0.15.0" },
-        { value: "0.14.4",      label: "0.14.4" },
+        { value: "16.0.0", label: "16.0.0 — Latest" },
+        { value: "0.15.4", label: "0.15.4" },
+        { value: "0.15.3", label: "0.15.3" },
+        { value: "0.15.1", label: "0.15.1" },
+        { value: "0.15.0", label: "0.15.0" },
+        { value: "0.14.4", label: "0.14.4" },
       ],
-      availability: {},
-      hasAddons: false,
+      availability: {
+        "16.0.0": ["dmx"],
+        "0.15.4": ["dmx"],
+        "0.15.3": ["dmx"],
+        "0.15.1": [],
+        "0.15.0": [],
+        "0.14.4": [],
+      },
+      hasAddons: true,
     },
     duo2go_v1: {
       versions: [
@@ -498,20 +502,19 @@
       };
       return { manifest: `bins/solo2go/manifest_${ver}_${key}.json`, filename: filemap[key] || '' };
     },
-    duo2go_v2: (ver) => {
+    duo2go_v2: (ver, addons) => {
+      const hasDmx = addons.has('dmx');
       const filemap = {
-        "16.0.0":     { f: "WLED_16.0.0_Duo2Go-v2.bin",  m: "manifest_16.0.0_base.json" },
-        "16.0.0-dmx": { f: "WLED_16.0.0_Duo2Go-DMX.bin", m: "manifest_16.0.0_dmx.json" },
-        "0.15.4":     { f: "WLED_0.15.4_Duo2Go-v2.bin",  m: "manifest_0.15.4_base.json" },
-        "0.15.4-dmx": { f: "WLED_0.15.4_Duo2Go-DMX.bin", m: "manifest_0.15.4_dmx.json" },
-        "0.15.3":     { f: "WLED_0.15.3_Duo2Go-v2.bin",  m: "manifest_0.15.3_base.json" },
-        "0.15.3-dmx": { f: "WLED_0.15.3_Duo2Go-DMX.bin", m: "manifest_0.15.3_dmx.json" },
-        "0.15.1":     { f: "WLED_0.15.1_Duo2Go-v2.bin",  m: "manifest_0.15.1_base.json" },
-        "0.15.0":     { f: "WLED_0.15.0_Duo2Go-v2.bin",  m: "manifest_0.15.0_base.json" },
-        "0.14.4":     { f: "WLED_0.14.4_Duo2Go-v2.bin",  m: "manifest_0.14.4_base.json" },
+        "16.0.0": { base: { f: "WLED_16.0.0_Duo2Go-v2.bin",  m: "manifest_16.0.0_base.json" }, dmx: { f: "WLED_16.0.0_Duo2Go-DMX.bin", m: "manifest_16.0.0_dmx.json" } },
+        "0.15.4": { base: { f: "WLED_0.15.4_Duo2Go-v2.bin",  m: "manifest_0.15.4_base.json" }, dmx: { f: "WLED_0.15.4_Duo2Go-DMX.bin", m: "manifest_0.15.4_dmx.json" } },
+        "0.15.3": { base: { f: "WLED_0.15.3_Duo2Go-v2.bin",  m: "manifest_0.15.3_base.json" }, dmx: { f: "WLED_0.15.3_Duo2Go-DMX.bin", m: "manifest_0.15.3_dmx.json" } },
+        "0.15.1": { base: { f: "WLED_0.15.1_Duo2Go-v2.bin",  m: "manifest_0.15.1_base.json" } },
+        "0.15.0": { base: { f: "WLED_0.15.0_Duo2Go-v2.bin",  m: "manifest_0.15.0_base.json" } },
+        "0.14.4": { base: { f: "WLED_0.14.4_Duo2Go-v2.bin",  m: "manifest_0.14.4_base.json" } },
       };
-      const entry = filemap[ver] || {};
-      return { manifest: `bins/duo2go_v2/${entry.m}`, filename: entry.f || '' };
+      const entry = (filemap[ver] || {});
+      const variant = (hasDmx && entry.dmx) ? entry.dmx : entry.base || {};
+      return { manifest: `bins/duo2go_v2/${variant.m}`, filename: variant.f || '' };
     },
     duo2go_v1: (ver) => {
       const filemap = {
