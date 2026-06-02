@@ -219,21 +219,31 @@
     }
 
     esp-web-install-button::part(button) {
-      background: var(--green);
+      background: linear-gradient(135deg, #2db82d 0%, #1e9e1e 100%);
       color: #fff;
       border: none;
-      border-radius: 3px;
+      border-radius: 4px;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      padding: 0.7rem 1.75rem;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      padding: 0.85rem 2.25rem;
       cursor: pointer;
       white-space: nowrap;
-      transition: opacity 0.15s;
+      text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(45,184,45,0.35), 0 1px 3px rgba(0,0,0,0.3);
+      transition: box-shadow 0.2s, transform 0.1s, opacity 0.15s;
     }
 
-    esp-web-install-button::part(button):hover { opacity: 0.85; }
+    esp-web-install-button::part(button):hover {
+      box-shadow: 0 6px 20px rgba(45,184,45,0.5), 0 2px 6px rgba(0,0,0,0.3);
+      transform: translateY(-1px);
+    }
+
+    esp-web-install-button::part(button):active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(45,184,45,0.3);
+    }
 
     .flash-note {
       font-size: 0.78rem;
@@ -346,6 +356,15 @@
       Select the COM port when prompted.<br>
       <a href="https://rgb2go.com/pages/flashing-wled-firmware" target="_blank">Need drivers? See our guide →</a>
     </div>
+  </div>
+</div>
+
+<div class="card">
+  <p class="card-label">Step 4 &mdash; Configure Current Limit</p>
+  <div class="flash-note" style="font-size:0.85rem; line-height:1.8; color: var(--text);">
+    Your controller is pre-configured with a maximum amperage for the entire unit. Once flashed, open the WLED web UI and go to:<br><br>
+    <strong>Config → LED &amp; Hardware</strong> <span style="color:var(--muted)">(called <em>LED Preferences</em> in versions older than 0.16)</span><br><br>
+    Check the box labeled <strong>"Use per-output limiter"</strong>. This divides the total current limit equally across all available outputs, capping each at <strong>5A</strong>.
   </div>
 </div>
 
