@@ -84,13 +84,22 @@
 
     .card-label {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--text);
       margin-bottom: 1.25rem;
+      padding-left: 0.75rem;
+      border-left: 3px solid var(--green);
     }
+
+    .card:nth-of-type(1) .card-label { border-left-color: var(--red); }
+    .card:nth-of-type(2) .card-label { border-left-color: var(--green); }
+    .card:nth-of-type(3) .card-label { border-left-color: var(--blue); }
+    .card:nth-of-type(4) .card-label { border-left-color: var(--red); }
+    .card:nth-of-type(5) .card-label { border-left-color: var(--green); }
+    .card:nth-of-type(6) .card-label { border-left-color: var(--blue); }
 
     .selector-row {
       display: grid;
@@ -321,6 +330,8 @@
 </div>
 
 <div class="card addons">
+  <p class="card-label">Step 2 &mdash; Select Add-on Modules (optional)</p>
+  <div id="addon-unavailable" style="display:none;font-size:0.8rem;color:var(--muted);padding:0.25rem 0 0.5rem;">No add-on modules available for this controller.</div>
   <div class="addon-grid" id="addonGrid">
     <div class="addon-chip" data-addon="oled" onclick="toggleAddon(this)">
       <span class="addon-dot"></span>OLED Display
@@ -362,13 +373,14 @@
 </div>
 
 <div class="card">
-  <p class="card-label">Prefer to flash manually?</p>
+  <p class="card-label" style="border-left:none;padding-left:0;font-style:italic;">Prefer to flash manually?</p>
   <div class="flash-note" style="font-size:0.85rem; line-height:1.8; color: var(--text);">
     If you'd prefer to download the firmware files and flash manually using ESPHome Flasher, visit our <a href="https://rgb2go.com/pages/firmware-downloads" target="_blank" style="color:var(--green);font-weight:600;">Firmware Downloads page →</a>
   </div>
 </div>
 
 <div class="card">
+  <p class="card-label">Step 4 &mdash; Final Steps</p>
   <div class="flash-note" style="font-size:0.85rem; line-height:1.8; color: var(--text);">
     Your controller is pre-configured with a maximum amperage for the entire unit. Once flashed, open the WLED web UI and go to:<br><br>
     <strong>Config → LED &amp; Hardware</strong> <span style="color:var(--muted)">(called <em>LED Preferences</em> in versions older than 0.16)</span><br><br>
@@ -380,7 +392,7 @@
 
 <footer>
   <span>&copy; <script>document.write(new Date().getFullYear())</script> <a href="https://rgb2go.com" target="_blank">RGB2Go</a></span>
-  <span style="color: var(--muted); font-size: 0.65rem;">rev 20260605</span>
+  <span style="color: var(--muted); font-size: 0.65rem;">rev 20260612</span>
   <span>Powered by <a href="https://esphome.github.io/esp-web-tools/" target="_blank">ESP Web Tools</a></span>
 </footer>
 
@@ -621,7 +633,9 @@
       .join('');
 
     // Show/hide addon section
-    document.querySelector('.card.addons').style.display = config.hasAddons ? '' : 'none';
+    document.querySelector('.card.addons').style.display = '';
+    document.getElementById('addon-unavailable').style.display = config.hasAddons ? 'none' : 'block';
+    document.getElementById('addonGrid').style.display = config.hasAddons ? '' : 'none';
 
     selected.clear();
     document.querySelectorAll('.addon-chip').forEach(c => c.classList.remove('selected'));
