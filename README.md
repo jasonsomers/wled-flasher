@@ -19,6 +19,7 @@ Browser-based WLED firmware installer for RGB2Go controllers.
 | 0.15.3 | ✓ | ✓ | | ✓ | ✓ | ✓ |
 | 0.15.4 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | 16.0.0 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| 16.0.1 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 
 ### Duo2Go - Rev 1 (ESP8266)
 | Version | Base | 160MHz (Recommended) |
@@ -37,6 +38,7 @@ Browser-based WLED firmware installer for RGB2Go controllers.
 | 0.15.3 | ✓ | ✓ |
 | 0.15.4 | ✓ | ✓ |
 | 16.0.0 | ✓ | ✓ |
+| 16.0.1 | ✓ | ✓ |
 
 ### Tetra2Go (ESP32)
 | Version | Base | Ethernet | Differential | OLED |
@@ -46,6 +48,7 @@ Browser-based WLED firmware installer for RGB2Go controllers.
 | 0.15.3 | ✓ | ✓ | ✓ | ✓ |
 | 0.15.4 | ✓ | ✓ | ✓ | ✓ |
 | 16.0.0 | ✓ | ✓ | ✓ | ✓ |
+| 16.0.1 | ✓ | ✓ | ✓ | ✓ |
 
 ### Octa2Go (ESP32)
 | Version | Base | Ethernet | OLED |
@@ -55,11 +58,13 @@ Browser-based WLED firmware installer for RGB2Go controllers.
 | 0.15.3 | ✓ | ✓ | ✓ |
 | 0.15.4 | ✓ | ✓ | ✓ |
 | 16.0.0 | ✓ | ✓ | ✓ |
+| 16.0.1 | ✓ | ✓ | ✓ |
 
 ### Matrix2Go (ESP32)
 | Version | Base |
 |---|---|
 | 16.0.0 | ✓ |
+| 16.0.1 | ✓ |
 
 ## Add-on Modules
 
@@ -77,7 +82,7 @@ Browser-based WLED firmware installer for RGB2Go controllers.
 
 ## Known Issues
 
-**Ethernet cold-boot (16.0.0):** On some controllers, powering on with an Ethernet cable connected may prevent a successful boot. This appears to be a regression introduced in WLED 0.16.0. A workaround delay has been added to the RGB2Go firmware builds. If you experience this issue, power on without the cable, wait 10 seconds, then connect the cable.
+**Ethernet cold-boot (16.0.x):** On some controllers, powering on with an Ethernet cable connected may prevent a successful boot. This appears to be a regression introduced in WLED 0.16.0. A workaround delay has been added to the RGB2Go firmware builds. If you experience this issue, power on without the cable, wait 10 seconds, then connect the cable.
 
 ## Repo Structure
 
@@ -103,7 +108,7 @@ bins/
     WLED_<ver>_Duo2Go_160.bin
   duo2go_v2/
     manifest_<ver>_<addon>.json
-    WLED_<ver>_Duo2Go_v2.bin        # Note: underscore before v2
+    WLED_<ver>_Duo2Go_v2.bin        # Note: underscore before v2 on newer builds
     WLED_<ver>_Duo2Go-DMX.bin       # Note: hyphen for DMX variant
   tetra2go/
     manifest_<ver>_<addon>.json
@@ -117,8 +122,8 @@ bins/
     WLED_<ver>_Octa2Go-Eth.bin
     WLED_<ver>_Octa2Go-OLED.bin
   matrix2go/
-    manifest_16.0.0_base.json
-    WLED_16.0.0_Matrix2Go.bin
+    manifest_<ver>_base.json
+    WLED_<ver>_Matrix2Go.bin
 ```
 
 ## ESP32 vs ESP8266 Flashing
@@ -143,4 +148,4 @@ Both drivers can be installed simultaneously — Windows will auto-select the co
 
 ## Support
 
-jason@rgb2go.com | https://rgb2go.com
+support@rgb2go.com | https://rgb2go.com
