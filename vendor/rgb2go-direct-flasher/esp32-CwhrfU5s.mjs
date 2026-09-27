@@ -1,4 +1,4 @@
-import { R as _ } from "./direct-flasher-Dobi1RNX.mjs";
+import { R as _ } from "./direct-flasher-Bgmgd4Ku.mjs";
 class D extends _ {
   constructor() {
     super(...arguments), this.CHIP_NAME = "ESP32", this.IMAGE_CHIP_ID = 0, this.EFUSE_RD_REG_BASE = 1073061888, this.DR_REG_SYSCON_BASE = 1073111040, this.UART_CLKDIV_REG = 1072955412, this.UART_CLKDIV_MASK = 1048575, this.UART_DATE_REG_ADDR = 1610612856, this.XTAL_CLK_DIVIDER = 1, this.IROM_MAP_START = 1074593792, this.IROM_MAP_END = 1077936128, this.DROM_MAP_START = 1061158912, this.DROM_MAP_END = 1065353216, this.MEMORY_MAP = [
