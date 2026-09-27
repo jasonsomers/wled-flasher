@@ -9,6 +9,11 @@ Browser-based WLED firmware installer for RGB2Go controllers.
 - CP210x or CH340 USB serial driver installed
 - Data-capable USB cable (not a charge-only cable)
 
+## Flashing speed compatibility
+
+This site vendors and pins ESP Web Tools 10.4.0 in `vendor/esp-web-tools-10.4.0/`. Both the ESP ROM connection and post-stub flashing use **115200 baud**. This deliberate compatibility default avoids high-baud USB-UART failures observed on some CP210x controller batches. The flasher must keep these assets together when deployed; do not replace the local script with an unpinned CDN import.
+
+
 ## Supported Controllers
 
 ### Solo2Go (ESP32)
