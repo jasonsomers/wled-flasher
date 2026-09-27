@@ -11,7 +11,7 @@ Browser-based WLED firmware installer for RGB2Go controllers.
 
 ## Flashing speed compatibility
 
-This site vendors and pins ESP Web Tools 10.4.0 in `vendor/esp-web-tools-10.4.0/`. Both the ESP ROM connection and post-stub flashing use **115200 baud**. This deliberate compatibility default avoids high-baud USB-UART failures observed on some CP210x controller batches. The flasher must keep these assets together when deployed; do not replace the local script with an unpinned CDN import.
+This site uses the direct `esptool-js` bundle in `vendor/rgb2go-direct-flasher/`, rather than the ESP Web Tools install-dialog wrapper. Both the ESP ROM connection and post-stub flashing use **115200 baud**. This deliberate compatibility default avoids high-baud USB-UART failures observed on some CP210x controller batches. Keep every `.mjs` asset in that directory together when deploying.
 
 
 ## Supported Controllers

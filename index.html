@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RGB2Go WLED Flasher</title>
-  <!-- Pinned locally: ESP ROM + post-stub flashing stay at 115200 baud. -->
-  <script type="module" src="vendor/esp-web-tools-10.4.0/install-button.js"></script>
+  <!-- Direct esptool-js flasher: fixed at 115200 before and after stub upload. -->
+  <script type="module" src="vendor/rgb2go-direct-flasher/rgb2go-direct-flasher.mjs"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
@@ -363,9 +363,8 @@
     <span class="fw-name" id="fwName">—</span>
   </div>
   <div class="flash-row">
-    <esp-web-install-button id="flashBtn" manifest="">
-      <button slot="activate" class="flash-btn">Connect &amp; Flash</button>
-    </esp-web-install-button>
+    <button id="flashBtn" class="flash-btn" data-manifest="" type="button">Connect &amp; Flash</button>
+    <div id="flashStatus" class="flash-note" aria-live="polite">Flashes at 115200 baud for maximum USB-UART compatibility.</div>
     <div class="flash-note">
       Use a <strong>data-capable</strong> USB cable.<br>
       Select the COM port when prompted.<br>
@@ -394,8 +393,8 @@
 
 <footer>
   <span>&copy; <script>document.write(new Date().getFullYear())</script> <a href="https://rgb2go.com" target="_blank">RGB2Go</a></span>
-  <span style="color: var(--muted); font-size: 0.65rem;">rev 20260927-1</span>
-  <span>Powered by <a href="https://esphome.github.io/esp-web-tools/" target="_blank">ESP Web Tools</a></span>
+  <span style="color: var(--muted); font-size: 0.65rem;">rev 20260927-2</span>
+  <span>Powered by <a href="https://github.com/espressif/esptool-js" target="_blank">esptool-js</a></span>
 </footer>
 
 <div style="width:100%;max-width:680px;text-align:center;padding:2rem 0 1rem;border-top:1px solid var(--border);margin-top:0.5rem;">
@@ -672,7 +671,7 @@
     const ctrl = document.getElementById('controller').value;
     const ver  = document.getElementById('version').value;
     const { manifest, filename } = manifests[ctrl](ver, selected);
-    document.getElementById('flashBtn').setAttribute('manifest', manifest);
+    document.getElementById('flashBtn').dataset.manifest = manifest;
     document.getElementById('fwName').textContent = filename;
   }
 
