@@ -1,7 +1,7 @@
 # RGB2Go direct flasher bundle
 
-This is a browser bundle built from `esptool-js` 0.6.0. It replaces the ESP Web Tools installer wrapper for the RGB2Go GitHub Pages flasher.
+This browser bundle is built from `esptool-js` 0.6.0 and `improv-wifi-serial-sdk` 2.8.1. It replaces the ESP Web Tools installer wrapper for the RGB2Go GitHub Pages flasher.
 
-The direct client deliberately initializes `ESPLoader` at **115200 baud**. The ESP ROM connection and the post-stub transport stay at that rate, avoiding the high-baud CP210x failure seen in affected controller batches.
+The direct client initializes `ESPLoader` at **115200 baud**, retaining that speed after the RAM stub upload. After a successful flash and reset, it reopens the serial port at 115200 and launches an Improv Wi-Fi wizard. The wizard scans nearby networks when available and also supports manually entering an SSID.
 
 The bundle retains the upstream `esptool-js` LICENSE. All `.mjs` chunk files in this directory are required because the loader dynamically imports chip-specific ROM and stub modules.
