@@ -1,4 +1,4 @@
-class k extends Error {
+class D extends Error {
 }
 /*! pako 2.2.0 https://github.com/nodeca/pako @license (MIT AND Zlib) */
 const Tn = 4, Ke = 0, qe = 1, Dn = 2;
@@ -56,20 +56,20 @@ const Qi = (e) => e < 256 ? Ft[e] : Ft[256 + (e >>> 7)], Nt = (e, i) => {
   e.bi_valid === 16 ? (Nt(e, e.bi_buf), e.bi_buf = 0, e.bi_valid = 0) : e.bi_valid >= 8 && (e.pending_buf[e.pending++] = e.bi_buf & 255, e.bi_buf >>= 8, e.bi_valid -= 8);
 }, Bn = (e, i) => {
   const t = i.dyn_tree, n = i.max_code, a = i.stat_desc.static_tree, s = i.stat_desc.has_stree, r = i.stat_desc.extra_bits, l = i.stat_desc.extra_base, h = i.stat_desc.max_length;
-  let o, c, u, d, f, g, y = 0;
+  let o, c, _, d, f, g, A = 0;
   for (d = 0; d <= st; d++)
     e.bl_count[d] = 0;
   for (t[e.heap[e.heap_max] * 2 + 1] = 0, o = e.heap_max + 1; o < Wi; o++)
-    c = e.heap[o], d = t[t[c * 2 + 1] * 2 + 1] + 1, d > h && (d = h, y++), t[c * 2 + 1] = d, !(c > n) && (e.bl_count[d]++, f = 0, c >= l && (f = r[c - l]), g = t[c * 2], e.opt_len += g * (d + f), s && (e.static_len += g * (a[c * 2 + 1] + f)));
-  if (y !== 0) {
+    c = e.heap[o], d = t[t[c * 2 + 1] * 2 + 1] + 1, d > h && (d = h, A++), t[c * 2 + 1] = d, !(c > n) && (e.bl_count[d]++, f = 0, c >= l && (f = r[c - l]), g = t[c * 2], e.opt_len += g * (d + f), s && (e.static_len += g * (a[c * 2 + 1] + f)));
+  if (A !== 0) {
     do {
       for (d = h - 1; e.bl_count[d] === 0; )
         d--;
-      e.bl_count[d]--, e.bl_count[d + 1] += 2, e.bl_count[h]--, y -= 2;
-    } while (y > 0);
+      e.bl_count[d]--, e.bl_count[d + 1] += 2, e.bl_count[h]--, A -= 2;
+    } while (A > 0);
     for (d = h; d !== 0; d--)
       for (c = e.bl_count[d]; c !== 0; )
-        u = e.heap[--o], !(u > n) && (t[u * 2 + 1] !== d && (e.opt_len += (d - t[u * 2 + 1]) * t[u * 2], t[u * 2 + 1] = d), c--);
+        _ = e.heap[--o], !(_ > n) && (t[_ * 2 + 1] !== d && (e.opt_len += (d - t[_ * 2 + 1]) * t[_ * 2], t[_ * 2 + 1] = d), c--);
   }
 }, en = (e, i, t) => {
   const n = new Array(st + 1);
@@ -323,7 +323,7 @@ const { _tr_init: aa, _tr_stored_block: Te, _tr_flush_block: sa, _tr_tally: et, 
   Z_DEFAULT_STRATEGY: ua,
   Z_UNKNOWN: ga,
   Z_DEFLATED: ne
-} = ie, pa = 9, wa = 15, Ea = 8, Sa = 29, ma = 256, De = ma + 1 + Sa, ba = 30, ya = 19, xa = 2 * De + 1, Aa = 15, v = 3, tt = 258, j = tt + v + 1, Ra = 32, mt = 42, ze = 57, Ce = 69, Me = 73, Le = 91, Pe = 103, rt = 113, It = 666, P = 1, At = 2, lt = 3, Rt = 4, va = 3, ot = (e, i) => (e.msg = St[i], i), ei = (e) => e * 2 - (e > 4 ? 9 : 0), Q = (e) => {
+} = ie, pa = 9, wa = 15, Ea = 8, Sa = 29, ma = 256, De = ma + 1 + Sa, ba = 30, ya = 19, xa = 2 * De + 1, Aa = 15, k = 3, tt = 258, j = tt + k + 1, Ra = 32, mt = 42, ze = 57, Ce = 69, Me = 73, Le = 91, Pe = 103, rt = 113, It = 666, P = 1, At = 2, lt = 3, Rt = 4, va = 3, ot = (e, i) => (e.msg = St[i], i), ei = (e) => e * 2 - (e > 4 ? 9 : 0), Q = (e) => {
   let i = e.length;
   for (; --i >= 0; )
     e[i] = 0;
@@ -342,7 +342,7 @@ let $e = (e, i, t) => (i << e.hash_shift ^ t) & e.hash_mask;
 const ht = (e, i) => {
   let t;
   if (e.legacy_hash)
-    t = e.ins_h = $e(e, e.ins_h, e.window[i + v - 1]);
+    t = e.ins_h = $e(e, e.ins_h, e.window[i + k - 1]);
   else {
     const a = e.window, s = a[i] | a[i + 1] << 8 | a[i + 2] << 16 | a[i + 3] << 24;
     t = e.ins_h = Math.imul(s, 66521) + 66521 >>> 16 & e.hash_mask;
@@ -355,7 +355,7 @@ const ht = (e, i) => {
   t > e.avail_out && (t = e.avail_out), t !== 0 && (e.output.set(i.pending_buf.subarray(i.pending_out, i.pending_out + t), e.next_out), e.next_out += t, i.pending_out += t, e.total_out += t, e.avail_out -= t, i.pending -= t, i.pending === 0 && (i.pending_out = 0));
 }, B = (e, i) => {
   sa(e, e.block_start >= 0 ? e.block_start : -1, e.strstart - e.block_start, i), e.block_start = e.strstart, N(e.strm);
-}, I = (e, i) => {
+}, T = (e, i) => {
   e.pending_buf[e.pending++] = i;
 }, vt = (e, i) => {
   e.pending_buf[e.pending++] = i >>> 8 & 255, e.pending_buf[e.pending++] = i & 255;
@@ -364,7 +364,7 @@ const ht = (e, i) => {
   return a > n && (a = n), a === 0 ? 0 : (e.avail_in -= a, i.set(e.input.subarray(e.next_in, e.next_in + a), t), e.state.wrap === 1 ? e.adler = Bt(e.adler, i, a, t) : e.state.wrap === 2 && (e.adler = M(e.adler, i, a, t)), e.next_in += a, e.total_in += a, a);
 }, rn = (e, i) => {
   let t = e.max_chain_length, n = e.strstart, a, s, r = e.prev_length, l = e.nice_match;
-  const h = e.strstart > e.w_size - j ? e.strstart - (e.w_size - j) : 0, o = e.window, c = e.w_mask, u = e.prev, d = e.strstart + tt;
+  const h = e.strstart > e.w_size - j ? e.strstart - (e.w_size - j) : 0, o = e.window, c = e.w_mask, _ = e.prev, d = e.strstart + tt;
   let f = o[n + r - 1], g = o[n + r];
   e.prev_length >= e.good_match && (t >>= 2), l > e.lookahead && (l = e.lookahead);
   do
@@ -379,7 +379,7 @@ const ht = (e, i) => {
         f = o[n + r - 1], g = o[n + r];
       }
     }
-  while ((i = u[i & c]) > h && --t !== 0);
+  while ((i = _[i & c]) > h && --t !== 0);
   return r <= e.lookahead ? r : e.lookahead;
 }, bt = (e) => {
   const i = e.w_size;
@@ -388,11 +388,11 @@ const ht = (e, i) => {
     if (n = e.window_size - e.lookahead - e.strstart, e.strstart >= i + (i - j) && (e.window.set(e.window.subarray(i, i + i - n), 0), e.match_start -= i, e.strstart -= i, e.block_start -= i, e.insert > e.strstart && (e.insert = e.strstart), Ia(e), n += i), e.strm.avail_in === 0)
       break;
     if (t = Oe(e.strm, e.window, e.strstart + e.lookahead, n), e.lookahead += t, e.legacy_hash) {
-      if (e.lookahead + e.insert >= v)
-        for (a = e.strstart - e.insert, e.ins_h = e.window[a], e.ins_h = $e(e, e.ins_h, e.window[a + 1]); e.insert && (ht(e, a), a++, e.insert--, !(e.lookahead + e.insert < v)); )
+      if (e.lookahead + e.insert >= k)
+        for (a = e.strstart - e.insert, e.ins_h = e.window[a], e.ins_h = $e(e, e.ins_h, e.window[a + 1]); e.insert && (ht(e, a), a++, e.insert--, !(e.lookahead + e.insert < k)); )
           ;
-    } else if (e.lookahead + e.insert > v)
-      for (a = e.strstart - e.insert; e.insert && (ht(e, a), a++, e.insert--, !(e.lookahead + e.insert <= v)); )
+    } else if (e.lookahead + e.insert > k)
+      for (a = e.strstart - e.insert; e.insert && (ht(e, a), a++, e.insert--, !(e.lookahead + e.insert <= k)); )
         ;
   } while (e.lookahead < j && e.strm.avail_in !== 0);
 }, on = (e, i) => {
@@ -412,8 +412,8 @@ const ht = (e, i) => {
       if (e.lookahead === 0)
         break;
     }
-    if (t = 0, e.lookahead >= v && (t = ht(e, e.strstart)), t !== 0 && e.strstart - t <= e.w_size - j && (e.match_length = rn(e, t)), e.match_length >= v)
-      if (n = et(e, e.strstart - e.match_start, e.match_length - v), e.lookahead -= e.match_length, e.match_length <= e.max_lazy_match && e.lookahead >= v) {
+    if (t = 0, e.lookahead >= k && (t = ht(e, e.strstart)), t !== 0 && e.strstart - t <= e.w_size - j && (e.match_length = rn(e, t)), e.match_length >= k)
+      if (n = et(e, e.strstart - e.match_start, e.match_length - k), e.lookahead -= e.match_length, e.match_length <= e.max_lazy_match && e.lookahead >= k) {
         e.match_length--;
         do
           e.strstart++, t = ht(e, e.strstart);
@@ -426,7 +426,7 @@ const ht = (e, i) => {
     if (n && (B(e, !1), e.strm.avail_out === 0))
       return P;
   }
-  return e.insert = e.strstart < v - 1 ? e.strstart : v - 1, i === G ? (B(e, !0), e.strm.avail_out === 0 ? lt : Rt) : e.sym_next && (B(e, !1), e.strm.avail_out === 0) ? P : At;
+  return e.insert = e.strstart < k - 1 ? e.strstart : k - 1, i === G ? (B(e, !0), e.strm.avail_out === 0 ? lt : Rt) : e.sym_next && (B(e, !1), e.strm.avail_out === 0) ? P : At;
 }, ut = (e, i) => {
   let t, n, a;
   for (; ; ) {
@@ -436,12 +436,12 @@ const ht = (e, i) => {
       if (e.lookahead === 0)
         break;
     }
-    if (t = 0, e.lookahead >= v && (t = ht(e, e.strstart)), e.prev_length = e.match_length, e.prev_match = e.match_start, e.match_length = v - 1, t !== 0 && e.prev_length < e.max_lazy_match && e.strstart - t <= e.w_size - j && (e.match_length = rn(e, t), e.match_length <= 5 && (e.strategy === fa || e.match_length === v && e.strstart - e.match_start > 4096) && (e.match_length = v - 1)), e.prev_length >= v && e.match_length <= e.prev_length) {
-      a = e.strstart + e.lookahead - v, n = et(e, e.strstart - 1 - e.prev_match, e.prev_length - v), e.lookahead -= e.prev_length - 1, e.prev_length -= 2;
+    if (t = 0, e.lookahead >= k && (t = ht(e, e.strstart)), e.prev_length = e.match_length, e.prev_match = e.match_start, e.match_length = k - 1, t !== 0 && e.prev_length < e.max_lazy_match && e.strstart - t <= e.w_size - j && (e.match_length = rn(e, t), e.match_length <= 5 && (e.strategy === fa || e.match_length === k && e.strstart - e.match_start > 4096) && (e.match_length = k - 1)), e.prev_length >= k && e.match_length <= e.prev_length) {
+      a = e.strstart + e.lookahead - k, n = et(e, e.strstart - 1 - e.prev_match, e.prev_length - k), e.lookahead -= e.prev_length - 1, e.prev_length -= 2;
       do
         ++e.strstart <= a && (t = ht(e, e.strstart));
       while (--e.prev_length !== 0);
-      if (e.match_available = 0, e.match_length = v - 1, e.strstart++, n && (B(e, !1), e.strm.avail_out === 0))
+      if (e.match_available = 0, e.match_length = k - 1, e.strstart++, n && (B(e, !1), e.strm.avail_out === 0))
         return P;
     } else if (e.match_available) {
       if (n = et(e, 0, e.window[e.strstart - 1]), n && B(e, !1), e.strstart++, e.lookahead--, e.strm.avail_out === 0)
@@ -449,7 +449,7 @@ const ht = (e, i) => {
     } else
       e.match_available = 1, e.strstart++, e.lookahead--;
   }
-  return e.match_available && (n = et(e, 0, e.window[e.strstart - 1]), e.match_available = 0), e.insert = e.strstart < v - 1 ? e.strstart : v - 1, i === G ? (B(e, !0), e.strm.avail_out === 0 ? lt : Rt) : e.sym_next && (B(e, !1), e.strm.avail_out === 0) ? P : At;
+  return e.match_available && (n = et(e, 0, e.window[e.strstart - 1]), e.match_available = 0), e.insert = e.strstart < k - 1 ? e.strstart : k - 1, i === G ? (B(e, !0), e.strm.avail_out === 0 ? lt : Rt) : e.sym_next && (B(e, !1), e.strm.avail_out === 0) ? P : At;
 }, ka = (e, i) => {
   let t, n, a, s;
   const r = e.window;
@@ -460,14 +460,14 @@ const ht = (e, i) => {
       if (e.lookahead === 0)
         break;
     }
-    if (e.match_length = 0, e.lookahead >= v && e.strstart > 0 && (a = e.strstart - 1, n = r[a], n === r[++a] && n === r[++a] && n === r[++a])) {
+    if (e.match_length = 0, e.lookahead >= k && e.strstart > 0 && (a = e.strstart - 1, n = r[a], n === r[++a] && n === r[++a] && n === r[++a])) {
       s = e.strstart + tt;
       do
         ;
       while (n === r[++a] && n === r[++a] && n === r[++a] && n === r[++a] && n === r[++a] && n === r[++a] && n === r[++a] && n === r[++a] && a < s);
       e.match_length = tt - (s - a), e.match_length > e.lookahead && (e.match_length = e.lookahead);
     }
-    if (e.match_length >= v ? (t = et(e, 1, e.match_length - v), e.lookahead -= e.match_length, e.strstart += e.match_length, e.match_length = 0) : (t = et(e, 0, e.window[e.strstart]), e.lookahead--, e.strstart++), t && (B(e, !1), e.strm.avail_out === 0))
+    if (e.match_length >= k ? (t = et(e, 1, e.match_length - k), e.lookahead -= e.match_length, e.strstart += e.match_length, e.match_length = 0) : (t = et(e, 0, e.window[e.strstart]), e.lookahead--, e.strstart++), t && (B(e, !1), e.strm.avail_out === 0))
       return P;
   }
   return e.insert = 0, i === G ? (B(e, !0), e.strm.avail_out === 0 ? lt : Rt) : e.sym_next && (B(e, !1), e.strm.avail_out === 0) ? P : At;
@@ -510,7 +510,7 @@ const kt = [
   new W(32, 258, 258, 4096, ut)
   /* 9 max compression */
 ], Da = (e) => {
-  e.window_size = 2 * e.w_size, Q(e.head), e.max_lazy_match = kt[e.level].max_lazy, e.good_match = kt[e.level].good_length, e.nice_match = kt[e.level].nice_length, e.max_chain_length = kt[e.level].max_chain, e.strstart = 0, e.block_start = 0, e.lookahead = 0, e.insert = 0, e.match_length = e.prev_length = v - 1, e.match_available = 0, e.ins_h = 0;
+  e.window_size = 2 * e.w_size, Q(e.head), e.max_lazy_match = kt[e.level].max_lazy, e.good_match = kt[e.level].good_length, e.nice_match = kt[e.level].nice_length, e.max_chain_length = kt[e.level].max_chain, e.strstart = 0, e.block_start = 0, e.lookahead = 0, e.insert = 0, e.match_length = e.prev_length = k - 1, e.match_available = 0, e.ins_h = 0;
 };
 function Ca() {
   this.strm = null, this.status = 0, this.pending_buf = null, this.pending_buf_size = 0, this.pending_out = 0, this.pending = 0, this.wrap = 0, this.gzhead = null, this.gzindex = 0, this.method = ne, this.last_flush = -1, this.w_size = 0, this.w_bits = 0, this.w_mask = 0, this.window = null, this.window_size = 0, this.prev = null, this.head = null, this.ins_h = 0, this.legacy_hash = 0, this.hash_size = 0, this.hash_bits = 0, this.hash_mask = 0, this.hash_shift = 0, this.block_start = 0, this.match_length = 0, this.prev_match = 0, this.match_available = 0, this.strstart = 0, this.match_start = 0, this.lookahead = 0, this.prev_length = 0, this.max_chain_length = 0, this.max_lazy_match = 0, this.level = 0, this.strategy = 0, this.good_match = 0, this.nice_match = 0, this.dyn_ltree = new Uint16Array(xa * 2), this.dyn_dtree = new Uint16Array((2 * ba + 1) * 2), this.bl_tree = new Uint16Array((2 * ya + 1) * 2), Q(this.dyn_ltree), Q(this.dyn_dtree), Q(this.bl_tree), this.l_desc = null, this.d_desc = null, this.bl_desc = null, this.bl_count = new Uint16Array(Aa + 1), this.heap = new Uint16Array(2 * De + 1), Q(this.heap), this.heap_len = 0, this.heap_max = 0, this.depth = new Uint16Array(2 * De + 1), Q(this.depth), this.sym_buf = 0, this.lit_bufsize = 0, this.sym_next = 0, this.sym_end = 0, this.opt_len = 0, this.static_len = 0, this.matches = 0, this.insert = 0, this.bi_buf = 0, this.bi_valid = 0;
@@ -543,7 +543,7 @@ const Gt = (e) => {
     return ot(e, V);
   n === 8 && (n = 9);
   const h = new Ca();
-  return e.state = h, h.strm = e, h.status = mt, h.wrap = l, h.gzhead = null, h.w_bits = n, h.w_size = 1 << h.w_bits, h.w_mask = h.w_size - 1, h.legacy_hash = r ? 1 : 0, h.hash_bits = a + 7, !h.legacy_hash && h.hash_bits < 15 && (h.hash_bits = 15), h.hash_size = 1 << h.hash_bits, h.hash_mask = h.hash_size - 1, h.hash_shift = ~~((h.hash_bits + v - 1) / v), h.window = new Uint8Array(h.w_size * 2), h.head = new Uint16Array(h.hash_size), h.prev = new Uint16Array(h.w_size), h.lit_bufsize = 1 << a + 6, h.pending_buf_size = h.lit_bufsize * 4, h.pending_buf = new Uint8Array(h.pending_buf_size), h.sym_buf = h.lit_bufsize, h.sym_end = (h.lit_bufsize - 1) * 3, h.level = i, h.strategy = s, h.method = t, hn(e);
+  return e.state = h, h.strm = e, h.status = mt, h.wrap = l, h.gzhead = null, h.w_bits = n, h.w_size = 1 << h.w_bits, h.w_mask = h.w_size - 1, h.legacy_hash = r ? 1 : 0, h.hash_bits = a + 7, !h.legacy_hash && h.hash_bits < 15 && (h.hash_bits = 15), h.hash_size = 1 << h.hash_bits, h.hash_mask = h.hash_size - 1, h.hash_shift = ~~((h.hash_bits + k - 1) / k), h.window = new Uint8Array(h.w_size * 2), h.head = new Uint16Array(h.hash_size), h.prev = new Uint16Array(h.w_size), h.lit_bufsize = 1 << a + 6, h.pending_buf_size = h.lit_bufsize * 4, h.pending_buf = new Uint8Array(h.pending_buf_size), h.sym_buf = h.lit_bufsize, h.sym_end = (h.lit_bufsize - 1) * 3, h.level = i, h.strategy = s, h.method = t, hn(e);
 }, La = (e, i) => cn(e, i, ne, wa, Ea, ua), Pa = (e, i) => {
   if (Gt(e) || i > Qe || i < 0)
     return e ? ot(e, V) : V;
@@ -564,12 +564,12 @@ const Gt = (e) => {
       return t.last_flush = -1, L;
   }
   if (t.status === ze) {
-    if (e.adler = 0, I(t, 31), I(t, 139), I(t, 8), t.gzhead)
-      I(
+    if (e.adler = 0, T(t, 31), T(t, 139), T(t, 8), t.gzhead)
+      T(
         t,
         (t.gzhead.text ? 1 : 0) + (t.gzhead.hcrc ? 2 : 0) + (t.gzhead.extra ? 4 : 0) + (t.gzhead.name ? 8 : 0) + (t.gzhead.comment ? 16 : 0)
-      ), I(t, t.gzhead.time & 255), I(t, t.gzhead.time >> 8 & 255), I(t, t.gzhead.time >> 16 & 255), I(t, t.gzhead.time >> 24 & 255), I(t, t.level === 9 ? 2 : t.strategy >= Kt || t.level < 2 ? 4 : 0), I(t, t.gzhead.os & 255), t.gzhead.extra && t.gzhead.extra.length && (I(t, t.gzhead.extra.length & 255), I(t, t.gzhead.extra.length >> 8 & 255)), t.gzhead.hcrc && (e.adler = M(e.adler, t.pending_buf, t.pending, 0)), t.gzindex = 0, t.status = Ce;
-    else if (I(t, 0), I(t, 0), I(t, 0), I(t, 0), I(t, 0), I(t, t.level === 9 ? 2 : t.strategy >= Kt || t.level < 2 ? 4 : 0), I(t, va), t.status = rt, N(e), t.pending !== 0)
+      ), T(t, t.gzhead.time & 255), T(t, t.gzhead.time >> 8 & 255), T(t, t.gzhead.time >> 16 & 255), T(t, t.gzhead.time >> 24 & 255), T(t, t.level === 9 ? 2 : t.strategy >= Kt || t.level < 2 ? 4 : 0), T(t, t.gzhead.os & 255), t.gzhead.extra && t.gzhead.extra.length && (T(t, t.gzhead.extra.length & 255), T(t, t.gzhead.extra.length >> 8 & 255)), t.gzhead.hcrc && (e.adler = M(e.adler, t.pending_buf, t.pending, 0)), t.gzindex = 0, t.status = Ce;
+    else if (T(t, 0), T(t, 0), T(t, 0), T(t, 0), T(t, 0), T(t, t.level === 9 ? 2 : t.strategy >= Kt || t.level < 2 ? 4 : 0), T(t, va), t.status = rt, N(e), t.pending !== 0)
       return t.last_flush = -1, L;
   }
   if (t.status === Ce) {
@@ -595,7 +595,7 @@ const Gt = (e) => {
             return t.last_flush = -1, L;
           a = 0;
         }
-        t.gzindex < t.gzhead.name.length ? s = t.gzhead.name.charCodeAt(t.gzindex++) & 255 : s = 0, I(t, s);
+        t.gzindex < t.gzhead.name.length ? s = t.gzhead.name.charCodeAt(t.gzindex++) & 255 : s = 0, T(t, s);
       } while (s !== 0);
       t.gzhead.hcrc && t.pending > a && (e.adler = M(e.adler, t.pending_buf, t.pending - a, a)), t.gzindex = 0;
     }
@@ -610,7 +610,7 @@ const Gt = (e) => {
             return t.last_flush = -1, L;
           a = 0;
         }
-        t.gzindex < t.gzhead.comment.length ? s = t.gzhead.comment.charCodeAt(t.gzindex++) & 255 : s = 0, I(t, s);
+        t.gzindex < t.gzhead.comment.length ? s = t.gzhead.comment.charCodeAt(t.gzindex++) & 255 : s = 0, T(t, s);
       } while (s !== 0);
       t.gzhead.hcrc && t.pending > a && (e.adler = M(e.adler, t.pending_buf, t.pending - a, a));
     }
@@ -620,7 +620,7 @@ const Gt = (e) => {
     if (t.gzhead.hcrc) {
       if (t.pending + 2 > t.pending_buf_size && (N(e), t.pending !== 0))
         return t.last_flush = -1, L;
-      I(t, e.adler & 255), I(t, e.adler >> 8 & 255), e.adler = 0;
+      T(t, e.adler & 255), T(t, e.adler >> 8 & 255), e.adler = 0;
     }
     if (t.status = rt, N(e), t.pending !== 0)
       return t.last_flush = -1, L;
@@ -632,7 +632,7 @@ const Gt = (e) => {
     if (a === At && (i === oa ? ra(t) : i !== Qe && (Te(t, 0, 0, !1), i === la && (Q(t.head), t.lookahead === 0 && (t.strstart = 0, t.block_start = 0, t.insert = 0))), N(e), e.avail_out === 0))
       return t.last_flush = -1, L;
   }
-  return i !== G ? L : t.wrap <= 0 ? ti : (t.wrap === 2 ? (I(t, e.adler & 255), I(t, e.adler >> 8 & 255), I(t, e.adler >> 16 & 255), I(t, e.adler >> 24 & 255), I(t, e.total_in & 255), I(t, e.total_in >> 8 & 255), I(t, e.total_in >> 16 & 255), I(t, e.total_in >> 24 & 255)) : (vt(t, e.adler >>> 16), vt(t, e.adler & 65535)), N(e), t.wrap > 0 && (t.wrap = -t.wrap), t.pending !== 0 ? L : ti);
+  return i !== G ? L : t.wrap <= 0 ? ti : (t.wrap === 2 ? (T(t, e.adler & 255), T(t, e.adler >> 8 & 255), T(t, e.adler >> 16 & 255), T(t, e.adler >> 24 & 255), T(t, e.total_in & 255), T(t, e.total_in >> 8 & 255), T(t, e.total_in >> 16 & 255), T(t, e.total_in >> 24 & 255)) : (vt(t, e.adler >>> 16), vt(t, e.adler & 65535)), N(e), t.wrap > 0 && (t.wrap = -t.wrap), t.pending !== 0 ? L : ti);
 }, Oa = (e) => {
   if (Gt(e))
     return V;
@@ -651,14 +651,14 @@ const Gt = (e) => {
     h.set(i.subarray(t - n.w_size, t), 0), i = h, t = n.w_size;
   }
   const s = e.avail_in, r = e.next_in, l = e.input;
-  for (e.avail_in = t, e.next_in = 0, e.input = i, bt(n); n.lookahead >= v; ) {
-    let h = n.strstart, o = n.lookahead - (v - 1);
+  for (e.avail_in = t, e.next_in = 0, e.input = i, bt(n); n.lookahead >= k; ) {
+    let h = n.strstart, o = n.lookahead - (k - 1);
     do
       ht(n, h), h++;
     while (--o);
-    n.strstart = h, n.lookahead = v - 1, bt(n);
+    n.strstart = h, n.lookahead = k - 1, bt(n);
   }
-  return n.strstart += n.lookahead, n.block_start = n.strstart, n.insert = n.lookahead, n.lookahead = 0, n.match_length = n.prev_length = v - 1, n.match_available = 0, e.next_in = r, e.input = l, e.avail_in = s, n.wrap = a, L;
+  return n.strstart += n.lookahead, n.block_start = n.strstart, n.insert = n.lookahead, n.lookahead = 0, n.match_length = n.prev_length = k - 1, n.match_available = 0, e.next_in = r, e.input = l, e.avail_in = s, n.wrap = a, L;
 };
 var Ua = La, Na = cn, Ba = hn, Ha = ln, za = Ma, $a = Pa, Ga = Oa, Za = Fa, Wa = "pako deflate (from Nodeca project)", Ct = {
   deflateInit: Ua,
@@ -849,94 +849,94 @@ var cs = hs, fs = {
 };
 const qt = 16209, ds = 16191;
 var _s = function(i, t) {
-  let n, a, s, r, l, h, o, c, u, d, f, g, y, p, w, E, m, _, R, D, S, T, A, b;
-  const x = i.state;
-  n = i.next_in, A = i.input, a = n + (i.avail_in - 5), s = i.next_out, b = i.output, r = s - (t - i.avail_out), l = s + (i.avail_out - 257), h = x.dmax, o = x.wsize, c = x.whave, u = x.wnext, d = x.window, f = x.hold, g = x.bits, y = x.lencode, p = x.distcode, w = (1 << x.lenbits) - 1, E = (1 << x.distbits) - 1;
+  let n, a, s, r, l, h, o, c, _, d, f, g, A, E, b, S, m, u, w, v, p, I, x, y;
+  const R = i.state;
+  n = i.next_in, x = i.input, a = n + (i.avail_in - 5), s = i.next_out, y = i.output, r = s - (t - i.avail_out), l = s + (i.avail_out - 257), h = R.dmax, o = R.wsize, c = R.whave, _ = R.wnext, d = R.window, f = R.hold, g = R.bits, A = R.lencode, E = R.distcode, b = (1 << R.lenbits) - 1, S = (1 << R.distbits) - 1;
   t:
     do {
-      g < 15 && (f += A[n++] << g, g += 8, f += A[n++] << g, g += 8), m = y[f & w];
+      g < 15 && (f += x[n++] << g, g += 8, f += x[n++] << g, g += 8), m = A[f & b];
       e:
         for (; ; ) {
-          if (_ = m >>> 24, f >>>= _, g -= _, _ = m >>> 16 & 255, _ === 0)
-            b[s++] = m & 65535;
-          else if (_ & 16) {
-            R = m & 65535, _ &= 15, _ && (g < _ && (f += A[n++] << g, g += 8), R += f & (1 << _) - 1, f >>>= _, g -= _), g < 15 && (f += A[n++] << g, g += 8, f += A[n++] << g, g += 8), m = p[f & E];
+          if (u = m >>> 24, f >>>= u, g -= u, u = m >>> 16 & 255, u === 0)
+            y[s++] = m & 65535;
+          else if (u & 16) {
+            w = m & 65535, u &= 15, u && (g < u && (f += x[n++] << g, g += 8), w += f & (1 << u) - 1, f >>>= u, g -= u), g < 15 && (f += x[n++] << g, g += 8, f += x[n++] << g, g += 8), m = E[f & S];
             i:
               for (; ; ) {
-                if (_ = m >>> 24, f >>>= _, g -= _, _ = m >>> 16 & 255, _ & 16) {
-                  if (D = m & 65535, _ &= 15, g < _ && (f += A[n++] << g, g += 8, g < _ && (f += A[n++] << g, g += 8)), D += f & (1 << _) - 1, D > h) {
-                    i.msg = "invalid distance too far back", x.mode = qt;
+                if (u = m >>> 24, f >>>= u, g -= u, u = m >>> 16 & 255, u & 16) {
+                  if (v = m & 65535, u &= 15, g < u && (f += x[n++] << g, g += 8, g < u && (f += x[n++] << g, g += 8)), v += f & (1 << u) - 1, v > h) {
+                    i.msg = "invalid distance too far back", R.mode = qt;
                     break t;
                   }
-                  if (f >>>= _, g -= _, _ = s - r, D > _) {
-                    if (_ = D - _, _ > c && x.sane) {
-                      i.msg = "invalid distance too far back", x.mode = qt;
+                  if (f >>>= u, g -= u, u = s - r, v > u) {
+                    if (u = v - u, u > c && R.sane) {
+                      i.msg = "invalid distance too far back", R.mode = qt;
                       break t;
                     }
-                    if (S = 0, T = d, u === 0) {
-                      if (S += o - _, _ < R) {
-                        R -= _;
+                    if (p = 0, I = d, _ === 0) {
+                      if (p += o - u, u < w) {
+                        w -= u;
                         do
-                          b[s++] = d[S++];
-                        while (--_);
-                        S = s - D, T = b;
+                          y[s++] = d[p++];
+                        while (--u);
+                        p = s - v, I = y;
                       }
-                    } else if (u < _) {
-                      if (S += o + u - _, _ -= u, _ < R) {
-                        R -= _;
+                    } else if (_ < u) {
+                      if (p += o + _ - u, u -= _, u < w) {
+                        w -= u;
                         do
-                          b[s++] = d[S++];
-                        while (--_);
-                        if (S = 0, u < R) {
-                          _ = u, R -= _;
+                          y[s++] = d[p++];
+                        while (--u);
+                        if (p = 0, _ < w) {
+                          u = _, w -= u;
                           do
-                            b[s++] = d[S++];
-                          while (--_);
-                          S = s - D, T = b;
+                            y[s++] = d[p++];
+                          while (--u);
+                          p = s - v, I = y;
                         }
                       }
-                    } else if (S += u - _, _ < R) {
-                      R -= _;
+                    } else if (p += _ - u, u < w) {
+                      w -= u;
                       do
-                        b[s++] = d[S++];
-                      while (--_);
-                      S = s - D, T = b;
+                        y[s++] = d[p++];
+                      while (--u);
+                      p = s - v, I = y;
                     }
-                    for (; R > 2; )
-                      b[s++] = T[S++], b[s++] = T[S++], b[s++] = T[S++], R -= 3;
-                    R && (b[s++] = T[S++], R > 1 && (b[s++] = T[S++]));
+                    for (; w > 2; )
+                      y[s++] = I[p++], y[s++] = I[p++], y[s++] = I[p++], w -= 3;
+                    w && (y[s++] = I[p++], w > 1 && (y[s++] = I[p++]));
                   } else {
-                    S = s - D;
+                    p = s - v;
                     do
-                      b[s++] = b[S++], b[s++] = b[S++], b[s++] = b[S++], R -= 3;
-                    while (R > 2);
-                    R && (b[s++] = b[S++], R > 1 && (b[s++] = b[S++]));
+                      y[s++] = y[p++], y[s++] = y[p++], y[s++] = y[p++], w -= 3;
+                    while (w > 2);
+                    w && (y[s++] = y[p++], w > 1 && (y[s++] = y[p++]));
                   }
-                } else if (_ & 64) {
-                  i.msg = "invalid distance code", x.mode = qt;
+                } else if (u & 64) {
+                  i.msg = "invalid distance code", R.mode = qt;
                   break t;
                 } else {
-                  m = p[(m & 65535) + (f & (1 << _) - 1)];
+                  m = E[(m & 65535) + (f & (1 << u) - 1)];
                   continue i;
                 }
                 break;
               }
-          } else if (_ & 64)
-            if (_ & 32) {
-              x.mode = ds;
+          } else if (u & 64)
+            if (u & 32) {
+              R.mode = ds;
               break t;
             } else {
-              i.msg = "invalid literal/length code", x.mode = qt;
+              i.msg = "invalid literal/length code", R.mode = qt;
               break t;
             }
           else {
-            m = y[(m & 65535) + (f & (1 << _) - 1)];
+            m = A[(m & 65535) + (f & (1 << u) - 1)];
             continue e;
           }
           break;
         }
     } while (n < a && s < l);
-  R = g >> 3, n -= R, g -= R << 3, f &= (1 << g) - 1, i.next_in = n, i.next_out = s, i.avail_in = n < a ? 5 + (a - n) : 5 - (n - a), i.avail_out = s < l ? 257 + (l - s) : 257 - (s - l), x.hold = f, x.bits = g;
+  w = g >> 3, n -= w, g -= w << 3, f &= (1 << g) - 1, i.next_in = n, i.next_out = s, i.avail_in = n < a ? 5 + (a - n) : 5 - (n - a), i.avail_out = s < l ? 257 + (l - s) : 257 - (s - l), R.hold = f, R.bits = g;
 };
 const gt = 15, ii = 852, ni = 592, ai = 0, we = 1, si = 2, us = new Uint16Array([
   /* Length codes 257..285 base */
@@ -1074,51 +1074,51 @@ const gt = 15, ii = 852, ni = 592, ai = 0, we = 1, si = 2, us = new Uint16Array(
   64
 ]), Es = (e, i, t, n, a, s, r, l) => {
   const h = l.bits;
-  let o = 0, c = 0, u = 0, d = 0, f = 0, g = 0, y = 0, p = 0, w = 0, E = 0, m, _, R, D, S, T = null, A;
-  const b = new Uint16Array(gt + 1), x = new Uint16Array(gt + 1);
+  let o = 0, c = 0, _ = 0, d = 0, f = 0, g = 0, A = 0, E = 0, b = 0, S = 0, m, u, w, v, p, I = null, x;
+  const y = new Uint16Array(gt + 1), R = new Uint16Array(gt + 1);
   let H = null, Wt, F, U;
   for (o = 0; o <= gt; o++)
-    b[o] = 0;
+    y[o] = 0;
   for (c = 0; c < n; c++)
-    b[i[t + c]]++;
-  for (f = h, d = gt; d >= 1 && b[d] === 0; d--)
+    y[i[t + c]]++;
+  for (f = h, d = gt; d >= 1 && y[d] === 0; d--)
     ;
   if (f > d && (f = d), d === 0)
     return a[s++] = 1 << 24 | 64 << 16 | 0, a[s++] = 1 << 24 | 64 << 16 | 0, l.bits = 1, 0;
-  for (u = 1; u < d && b[u] === 0; u++)
+  for (_ = 1; _ < d && y[_] === 0; _++)
     ;
-  for (f < u && (f = u), p = 1, o = 1; o <= gt; o++)
-    if (p <<= 1, p -= b[o], p < 0)
+  for (f < _ && (f = _), E = 1, o = 1; o <= gt; o++)
+    if (E <<= 1, E -= y[o], E < 0)
       return -1;
-  if (p > 0 && (e === ai || d !== 1))
+  if (E > 0 && (e === ai || d !== 1))
     return -1;
-  for (x[1] = 0, o = 1; o < gt; o++)
-    x[o + 1] = x[o] + b[o];
+  for (R[1] = 0, o = 1; o < gt; o++)
+    R[o + 1] = R[o] + y[o];
   for (c = 0; c < n; c++)
-    i[t + c] !== 0 && (r[x[i[t + c]]++] = c);
-  if (e === ai ? (T = H = r, A = 20) : e === we ? (T = us, H = gs, A = 257) : (T = ps, H = ws, A = 0), E = 0, c = 0, o = u, S = s, g = f, y = 0, R = -1, w = 1 << f, D = w - 1, e === we && w > ii || e === si && w > ni)
+    i[t + c] !== 0 && (r[R[i[t + c]]++] = c);
+  if (e === ai ? (I = H = r, x = 20) : e === we ? (I = us, H = gs, x = 257) : (I = ps, H = ws, x = 0), S = 0, c = 0, o = _, p = s, g = f, A = 0, w = -1, b = 1 << f, v = b - 1, e === we && b > ii || e === si && b > ni)
     return 1;
   for (; ; ) {
-    Wt = o - y, r[c] + 1 < A ? (F = 0, U = r[c]) : r[c] >= A ? (F = H[r[c] - A], U = T[r[c] - A]) : (F = 96, U = 0), m = 1 << o - y, _ = 1 << g, u = _;
+    Wt = o - A, r[c] + 1 < x ? (F = 0, U = r[c]) : r[c] >= x ? (F = H[r[c] - x], U = I[r[c] - x]) : (F = 96, U = 0), m = 1 << o - A, u = 1 << g, _ = u;
     do
-      _ -= m, a[S + (E >> y) + _] = Wt << 24 | F << 16 | U | 0;
-    while (_ !== 0);
-    for (m = 1 << o - 1; E & m; )
+      u -= m, a[p + (S >> A) + u] = Wt << 24 | F << 16 | U | 0;
+    while (u !== 0);
+    for (m = 1 << o - 1; S & m; )
       m >>= 1;
-    if (m !== 0 ? (E &= m - 1, E += m) : E = 0, c++, --b[o] === 0) {
+    if (m !== 0 ? (S &= m - 1, S += m) : S = 0, c++, --y[o] === 0) {
       if (o === d)
         break;
       o = i[t + r[c]];
     }
-    if (o > f && (E & D) !== R) {
-      for (y === 0 && (y = f), S += u, g = o - y, p = 1 << g; g + y < d && (p -= b[g + y], !(p <= 0)); )
-        g++, p <<= 1;
-      if (w += 1 << g, e === we && w > ii || e === si && w > ni)
+    if (o > f && (S & v) !== w) {
+      for (A === 0 && (A = f), p += _, g = o - A, E = 1 << g; g + A < d && (E -= y[g + A], !(E <= 0)); )
+        g++, E <<= 1;
+      if (b += 1 << g, e === we && b > ii || e === si && b > ni)
         return 1;
-      R = E & D, a[R] = f << 24 | g << 16 | S - s | 0;
+      w = S & v, a[w] = f << 24 | g << 16 | p - s | 0;
     }
   }
-  return E !== 0 && (a[S + E] = o - y << 24 | 64 << 16 | 0), l.bits = f, 0;
+  return S !== 0 && (a[p + S] = o - A << 24 | 64 << 16 | 0), l.bits = f, 0;
 };
 var Mt = Es;
 const Ss = 0, un = 1, gn = 2, {
@@ -1189,16 +1189,16 @@ const Ds = (e) => {
   const s = e.state;
   return s.window === null && (s.window = new Uint8Array(1 << s.wbits)), s.wsize === 0 && (s.wsize = 1 << s.wbits, s.wnext = 0, s.whave = 0), n >= s.wsize ? (s.window.set(i.subarray(t - s.wsize, t), 0), s.wnext = 0, s.whave = s.wsize) : (a = s.wsize - s.wnext, a > n && (a = n), s.window.set(i.subarray(t - n, t - n + a), s.wnext), n -= a, n ? (s.window.set(i.subarray(t - n, t), 0), s.wnext = n, s.whave = s.wsize) : (s.wnext += a, s.wnext === s.wsize && (s.wnext = 0), s.whave < s.wsize && (s.whave += a))), 0;
 }, Cs = (e, i) => {
-  let t, n, a, s, r, l, h, o, c, u, d, f, g, y, p = 0, w, E, m, _, R, D, S, T;
-  const A = new Uint8Array(4);
-  let b, x;
+  let t, n, a, s, r, l, h, o, c, _, d, f, g, A, E = 0, b, S, m, u, w, v, p, I;
+  const x = new Uint8Array(4);
+  let y, R;
   const H = (
     /* permutation of code lengths */
     new Uint8Array([16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15])
   );
   if (dt(e) || !e.output || !e.input && e.avail_in !== 0)
     return Z;
-  t = e.state, t.mode === Y && (t.mode = Ee), r = e.next_out, a = e.output, h = e.avail_out, s = e.next_in, n = e.input, l = e.avail_in, o = t.hold, c = t.bits, u = l, d = h, T = ct;
+  t = e.state, t.mode === Y && (t.mode = Ee), r = e.next_out, a = e.output, h = e.avail_out, s = e.next_in, n = e.input, l = e.avail_in, o = t.hold, c = t.bits, _ = l, d = h, I = ct;
   t:
     for (; ; )
       switch (t.mode) {
@@ -1213,7 +1213,7 @@ const Ds = (e) => {
             l--, o += n[s++] << c, c += 8;
           }
           if (t.wrap & 2 && o === 35615) {
-            t.wbits === 0 && (t.wbits = 15), t.check = 0, A[0] = o & 255, A[1] = o >>> 8 & 255, t.check = M(t.check, A, 2, 0), o = 0, c = 0, t.mode = li;
+            t.wbits === 0 && (t.wbits = 15), t.check = 0, x[0] = o & 255, x[1] = o >>> 8 & 255, t.check = M(t.check, x, 2, 0), o = 0, c = 0, t.mode = li;
             break;
           }
           if (t.head && (t.head.done = !1), !(t.wrap & 1) || /* check if zlib header allowed */
@@ -1225,7 +1225,7 @@ const Ds = (e) => {
             e.msg = "unknown compression method", t.mode = C;
             break;
           }
-          if (o >>>= 4, c -= 4, S = (o & 15) + 8, t.wbits === 0 && (t.wbits = S), S > 15 || S > t.wbits) {
+          if (o >>>= 4, c -= 4, p = (o & 15) + 8, t.wbits === 0 && (t.wbits = p), p > 15 || p > t.wbits) {
             e.msg = "invalid window size", t.mode = C;
             break;
           }
@@ -1245,7 +1245,7 @@ const Ds = (e) => {
             e.msg = "unknown header flags set", t.mode = C;
             break;
           }
-          t.head && (t.head.text = o >> 8 & 1), t.flags & 512 && t.wrap & 4 && (A[0] = o & 255, A[1] = o >>> 8 & 255, t.check = M(t.check, A, 2, 0)), o = 0, c = 0, t.mode = hi;
+          t.head && (t.head.text = o >> 8 & 1), t.flags & 512 && t.wrap & 4 && (x[0] = o & 255, x[1] = o >>> 8 & 255, t.check = M(t.check, x, 2, 0)), o = 0, c = 0, t.mode = hi;
         /* falls through */
         case hi:
           for (; c < 32; ) {
@@ -1253,7 +1253,7 @@ const Ds = (e) => {
               break t;
             l--, o += n[s++] << c, c += 8;
           }
-          t.head && (t.head.time = o), t.flags & 512 && t.wrap & 4 && (A[0] = o & 255, A[1] = o >>> 8 & 255, A[2] = o >>> 16 & 255, A[3] = o >>> 24 & 255, t.check = M(t.check, A, 4, 0)), o = 0, c = 0, t.mode = ci;
+          t.head && (t.head.time = o), t.flags & 512 && t.wrap & 4 && (x[0] = o & 255, x[1] = o >>> 8 & 255, x[2] = o >>> 16 & 255, x[3] = o >>> 24 & 255, t.check = M(t.check, x, 4, 0)), o = 0, c = 0, t.mode = ci;
         /* falls through */
         case ci:
           for (; c < 16; ) {
@@ -1261,7 +1261,7 @@ const Ds = (e) => {
               break t;
             l--, o += n[s++] << c, c += 8;
           }
-          t.head && (t.head.xflags = o & 255, t.head.os = o >> 8), t.flags & 512 && t.wrap & 4 && (A[0] = o & 255, A[1] = o >>> 8 & 255, t.check = M(t.check, A, 2, 0)), o = 0, c = 0, t.mode = fi;
+          t.head && (t.head.xflags = o & 255, t.head.os = o >> 8), t.flags & 512 && t.wrap & 4 && (x[0] = o & 255, x[1] = o >>> 8 & 255, t.check = M(t.check, x, 2, 0)), o = 0, c = 0, t.mode = fi;
         /* falls through */
         case fi:
           if (t.flags & 1024) {
@@ -1270,12 +1270,12 @@ const Ds = (e) => {
                 break t;
               l--, o += n[s++] << c, c += 8;
             }
-            t.length = o, t.head && (t.head.extra_len = o), t.flags & 512 && t.wrap & 4 && (A[0] = o & 255, A[1] = o >>> 8 & 255, t.check = M(t.check, A, 2, 0)), o = 0, c = 0;
+            t.length = o, t.head && (t.head.extra_len = o), t.flags & 512 && t.wrap & 4 && (x[0] = o & 255, x[1] = o >>> 8 & 255, t.check = M(t.check, x, 2, 0)), o = 0, c = 0;
           } else t.head && (t.head.extra = null);
           t.mode = di;
         /* falls through */
         case di:
-          if (t.flags & 1024 && (f = t.length, f > l && (f = l), f && (t.head && (S = t.head.extra_len - t.length, t.head.extra || (t.head.extra = new Uint8Array(t.head.extra_len)), t.head.extra.set(
+          if (t.flags & 1024 && (f = t.length, f > l && (f = l), f && (t.head && (p = t.head.extra_len - t.length, t.head.extra || (t.head.extra = new Uint8Array(t.head.extra_len)), t.head.extra.set(
             n.subarray(
               s,
               // extra field is limited to 65536 bytes
@@ -1283,7 +1283,7 @@ const Ds = (e) => {
               s + f
             ),
             /*len + copy > state.head.extra_max - len ? state.head.extra_max : copy,*/
-            S
+            p
           )), t.flags & 512 && t.wrap & 4 && (t.check = M(t.check, n, f, s)), l -= f, s += f, t.length -= f), t.length))
             break t;
           t.length = 0, t.mode = _i;
@@ -1294,9 +1294,9 @@ const Ds = (e) => {
               break t;
             f = 0;
             do
-              S = n[s + f++], t.head && S && t.length < 65536 && (t.head.name += String.fromCharCode(S));
-            while (S && f < l);
-            if (t.flags & 512 && t.wrap & 4 && (t.check = M(t.check, n, f, s)), l -= f, s += f, S)
+              p = n[s + f++], t.head && p && t.length < 65536 && (t.head.name += String.fromCharCode(p));
+            while (p && f < l);
+            if (t.flags & 512 && t.wrap & 4 && (t.check = M(t.check, n, f, s)), l -= f, s += f, p)
               break t;
           } else t.head && (t.head.name = null);
           t.length = 0, t.mode = ui;
@@ -1307,9 +1307,9 @@ const Ds = (e) => {
               break t;
             f = 0;
             do
-              S = n[s + f++], t.head && S && t.length < 65536 && (t.head.comment += String.fromCharCode(S));
-            while (S && f < l);
-            if (t.flags & 512 && t.wrap & 4 && (t.check = M(t.check, n, f, s)), l -= f, s += f, S)
+              p = n[s + f++], t.head && p && t.length < 65536 && (t.head.comment += String.fromCharCode(p));
+            while (p && f < l);
+            if (t.flags & 512 && t.wrap & 4 && (t.check = M(t.check, n, f, s)), l -= f, s += f, p)
               break t;
           } else t.head && (t.head.comment = null);
           t.mode = gi;
@@ -1422,7 +1422,7 @@ const Ds = (e) => {
           }
           for (; t.have < 19; )
             t.lens[H[t.have++]] = 0;
-          if (t.lencode = t.lendyn, t.lenbits = 7, b = { bits: t.lenbits }, T = Mt(Ss, t.lens, 0, 19, t.lencode, 0, t.work, b), t.lenbits = b.bits, T) {
+          if (t.lencode = t.lendyn, t.lenbits = 7, y = { bits: t.lenbits }, I = Mt(Ss, t.lens, 0, 19, t.lencode, 0, t.work, y), t.lenbits = y.bits, I) {
             e.msg = "invalid code lengths set", t.mode = C;
             break;
           }
@@ -1430,46 +1430,46 @@ const Ds = (e) => {
         /* falls through */
         case bi:
           for (; t.have < t.nlen + t.ndist; ) {
-            for (; p = t.lencode[o & (1 << t.lenbits) - 1], w = p >>> 24, E = p >>> 16 & 255, m = p & 65535, !(w <= c); ) {
+            for (; E = t.lencode[o & (1 << t.lenbits) - 1], b = E >>> 24, S = E >>> 16 & 255, m = E & 65535, !(b <= c); ) {
               if (l === 0)
                 break t;
               l--, o += n[s++] << c, c += 8;
             }
             if (m < 16)
-              o >>>= w, c -= w, t.lens[t.have++] = m;
+              o >>>= b, c -= b, t.lens[t.have++] = m;
             else {
               if (m === 16) {
-                for (x = w + 2; c < x; ) {
+                for (R = b + 2; c < R; ) {
                   if (l === 0)
                     break t;
                   l--, o += n[s++] << c, c += 8;
                 }
-                if (o >>>= w, c -= w, t.have === 0) {
+                if (o >>>= b, c -= b, t.have === 0) {
                   e.msg = "invalid bit length repeat", t.mode = C;
                   break;
                 }
-                S = t.lens[t.have - 1], f = 3 + (o & 3), o >>>= 2, c -= 2;
+                p = t.lens[t.have - 1], f = 3 + (o & 3), o >>>= 2, c -= 2;
               } else if (m === 17) {
-                for (x = w + 3; c < x; ) {
+                for (R = b + 3; c < R; ) {
                   if (l === 0)
                     break t;
                   l--, o += n[s++] << c, c += 8;
                 }
-                o >>>= w, c -= w, S = 0, f = 3 + (o & 7), o >>>= 3, c -= 3;
+                o >>>= b, c -= b, p = 0, f = 3 + (o & 7), o >>>= 3, c -= 3;
               } else {
-                for (x = w + 7; c < x; ) {
+                for (R = b + 7; c < R; ) {
                   if (l === 0)
                     break t;
                   l--, o += n[s++] << c, c += 8;
                 }
-                o >>>= w, c -= w, S = 0, f = 11 + (o & 127), o >>>= 7, c -= 7;
+                o >>>= b, c -= b, p = 0, f = 11 + (o & 127), o >>>= 7, c -= 7;
               }
               if (t.have + f > t.nlen + t.ndist) {
                 e.msg = "invalid bit length repeat", t.mode = C;
                 break;
               }
               for (; f--; )
-                t.lens[t.have++] = S;
+                t.lens[t.have++] = p;
             }
           }
           if (t.mode === C)
@@ -1478,11 +1478,11 @@ const Ds = (e) => {
             e.msg = "invalid code -- missing end-of-block", t.mode = C;
             break;
           }
-          if (t.lenbits = 9, b = { bits: t.lenbits }, T = Mt(un, t.lens, 0, t.nlen, t.lencode, 0, t.work, b), t.lenbits = b.bits, T) {
+          if (t.lenbits = 9, y = { bits: t.lenbits }, I = Mt(un, t.lens, 0, t.nlen, t.lencode, 0, t.work, y), t.lenbits = y.bits, I) {
             e.msg = "invalid literal/lengths set", t.mode = C;
             break;
           }
-          if (t.distbits = 6, t.distcode = t.distdyn, b = { bits: t.distbits }, T = Mt(gn, t.lens, t.nlen, t.ndist, t.distcode, 0, t.work, b), t.distbits = b.bits, T) {
+          if (t.distbits = 6, t.distcode = t.distdyn, y = { bits: t.distbits }, I = Mt(gn, t.lens, t.nlen, t.ndist, t.distcode, 0, t.work, y), t.distbits = y.bits, I) {
             e.msg = "invalid distances set", t.mode = C;
             break;
           }
@@ -1497,36 +1497,36 @@ const Ds = (e) => {
             e.next_out = r, e.avail_out = h, e.next_in = s, e.avail_in = l, t.hold = o, t.bits = c, _s(e, d), r = e.next_out, a = e.output, h = e.avail_out, s = e.next_in, n = e.input, l = e.avail_in, o = t.hold, c = t.bits, t.mode === Y && (t.back = -1);
             break;
           }
-          for (t.back = 0; p = t.lencode[o & (1 << t.lenbits) - 1], w = p >>> 24, E = p >>> 16 & 255, m = p & 65535, !(w <= c); ) {
+          for (t.back = 0; E = t.lencode[o & (1 << t.lenbits) - 1], b = E >>> 24, S = E >>> 16 & 255, m = E & 65535, !(b <= c); ) {
             if (l === 0)
               break t;
             l--, o += n[s++] << c, c += 8;
           }
-          if (E && !(E & 240)) {
-            for (_ = w, R = E, D = m; p = t.lencode[D + ((o & (1 << _ + R) - 1) >> _)], w = p >>> 24, E = p >>> 16 & 255, m = p & 65535, !(_ + w <= c); ) {
+          if (S && !(S & 240)) {
+            for (u = b, w = S, v = m; E = t.lencode[v + ((o & (1 << u + w) - 1) >> u)], b = E >>> 24, S = E >>> 16 & 255, m = E & 65535, !(u + b <= c); ) {
               if (l === 0)
                 break t;
               l--, o += n[s++] << c, c += 8;
             }
-            o >>>= _, c -= _, t.back += _;
+            o >>>= u, c -= u, t.back += u;
           }
-          if (o >>>= w, c -= w, t.back += w, t.length = m, E === 0) {
+          if (o >>>= b, c -= b, t.back += b, t.length = m, S === 0) {
             t.mode = vi;
             break;
           }
-          if (E & 32) {
+          if (S & 32) {
             t.back = -1, t.mode = Y;
             break;
           }
-          if (E & 64) {
+          if (S & 64) {
             e.msg = "invalid literal/length code", t.mode = C;
             break;
           }
-          t.extra = E & 15, t.mode = yi;
+          t.extra = S & 15, t.mode = yi;
         /* falls through */
         case yi:
           if (t.extra) {
-            for (x = t.extra; c < x; ) {
+            for (R = t.extra; c < R; ) {
               if (l === 0)
                 break t;
               l--, o += n[s++] << c, c += 8;
@@ -1536,28 +1536,28 @@ const Ds = (e) => {
           t.was = t.length, t.mode = xi;
         /* falls through */
         case xi:
-          for (; p = t.distcode[o & (1 << t.distbits) - 1], w = p >>> 24, E = p >>> 16 & 255, m = p & 65535, !(w <= c); ) {
+          for (; E = t.distcode[o & (1 << t.distbits) - 1], b = E >>> 24, S = E >>> 16 & 255, m = E & 65535, !(b <= c); ) {
             if (l === 0)
               break t;
             l--, o += n[s++] << c, c += 8;
           }
-          if (!(E & 240)) {
-            for (_ = w, R = E, D = m; p = t.distcode[D + ((o & (1 << _ + R) - 1) >> _)], w = p >>> 24, E = p >>> 16 & 255, m = p & 65535, !(_ + w <= c); ) {
+          if (!(S & 240)) {
+            for (u = b, w = S, v = m; E = t.distcode[v + ((o & (1 << u + w) - 1) >> u)], b = E >>> 24, S = E >>> 16 & 255, m = E & 65535, !(u + b <= c); ) {
               if (l === 0)
                 break t;
               l--, o += n[s++] << c, c += 8;
             }
-            o >>>= _, c -= _, t.back += _;
+            o >>>= u, c -= u, t.back += u;
           }
-          if (o >>>= w, c -= w, t.back += w, E & 64) {
+          if (o >>>= b, c -= b, t.back += b, S & 64) {
             e.msg = "invalid distance code", t.mode = C;
             break;
           }
-          t.offset = m, t.extra = E & 15, t.mode = Ai;
+          t.offset = m, t.extra = S & 15, t.mode = Ai;
         /* falls through */
         case Ai:
           if (t.extra) {
-            for (x = t.extra; c < x; ) {
+            for (R = t.extra; c < R; ) {
               if (l === 0)
                 break t;
               l--, o += n[s++] << c, c += 8;
@@ -1578,12 +1578,12 @@ const Ds = (e) => {
               e.msg = "invalid distance too far back", t.mode = C;
               break;
             }
-            f > t.wnext ? (f -= t.wnext, g = t.wsize - f) : g = t.wnext - f, f > t.length && (f = t.length), y = t.window;
+            f > t.wnext ? (f -= t.wnext, g = t.wsize - f) : g = t.wnext - f, f > t.length && (f = t.length), A = t.window;
           } else
-            y = a, g = r - t.offset, f = t.length;
+            A = a, g = r - t.offset, f = t.length;
           f > h && (f = h), h -= f, t.length -= f;
           do
-            a[r++] = y[g++];
+            a[r++] = A[g++];
           while (--f);
           t.length === 0 && (t.mode = Yt);
           break;
@@ -1624,10 +1624,10 @@ const Ds = (e) => {
           t.mode = ki;
         /* falls through */
         case ki:
-          T = bs;
+          I = bs;
           break t;
         case C:
-          T = pn;
+          I = pn;
           break t;
         case En:
           return wn;
@@ -1636,8 +1636,8 @@ const Ds = (e) => {
         default:
           return Z;
       }
-  return e.next_out = r, e.avail_out = h, e.next_in = s, e.avail_in = l, t.hold = o, t.bits = c, (t.wsize || d !== e.avail_out && t.mode < C && (t.mode < me || i !== ri)) && An(e, e.output, e.next_out, d - e.avail_out), u -= e.avail_in, d -= e.avail_out, e.total_in += u, e.total_out += d, t.total += d, t.wrap & 4 && d && (e.adler = t.check = /*UPDATE_CHECK(state.check, strm.next_out - _out, _out);*/
-  t.flags ? M(t.check, a, d, e.next_out - d) : Bt(t.check, a, d, e.next_out - d)), e.data_type = t.bits + (t.last ? 64 : 0) + (t.mode === Y ? 128 : 0) + (t.mode === jt || t.mode === Se ? 256 : 0), (u === 0 && d === 0 || i === ri) && T === ct && (T = xs), T;
+  return e.next_out = r, e.avail_out = h, e.next_in = s, e.avail_in = l, t.hold = o, t.bits = c, (t.wsize || d !== e.avail_out && t.mode < C && (t.mode < me || i !== ri)) && An(e, e.output, e.next_out, d - e.avail_out), _ -= e.avail_in, d -= e.avail_out, e.total_in += _, e.total_out += d, t.total += d, t.wrap & 4 && d && (e.adler = t.check = /*UPDATE_CHECK(state.check, strm.next_out - _out, _out);*/
+  t.flags ? M(t.check, a, d, e.next_out - d) : Bt(t.check, a, d, e.next_out - d)), e.data_type = t.bits + (t.last ? 64 : 0) + (t.mode === Y ? 128 : 0) + (t.mode === jt || t.mode === Se ? 256 : 0), (_ === 0 && d === 0 || i === ri) && I === ct && (I = xs), I;
 }, Ms = (e) => {
   if (dt(e))
     return Z;
@@ -2322,19 +2322,19 @@ class Ze {
   loadCommonHeader(i, t, n) {
     const a = i[t], s = i[t + 1];
     if (this.flashMode = i[t + 2], this.flashSizeFreq = i[t + 3], this.entrypoint = ve(i, t + 4), a !== n)
-      throw new k(`Invalid firmware image magic=0x${a.toString(16)}`);
+      throw new D(`Invalid firmware image magic=0x${a.toString(16)}`);
     return s;
   }
   verify() {
     if (this.segments.length > 16)
-      throw new k(`Invalid segment count ${this.segments.length} (max 16). Usually this indicates a linker script problem.`);
+      throw new D(`Invalid segment count ${this.segments.length} (max 16). Usually this indicates a linker script problem.`);
   }
   loadSegment(i, t, n = !1) {
     const a = t, s = ve(i, t), r = ve(i, t + 4);
     this.warnIfUnusualSegment(s, r, n);
     const l = i.slice(t + 8, t + 8 + r);
     if (l.length < r)
-      throw new k(`End of file reading segment 0x${s.toString(16)}, length ${r} (actual length ${l.length})`);
+      throw new D(`End of file reading segment 0x${s.toString(16)}, length ${r} (actual length ${l.length})`);
     const h = new nt(s, l, a);
     return this.segments.push(h), h;
   }
@@ -2346,14 +2346,14 @@ class Ze {
     if (this.elfSha256Offset >= t && this.elfSha256Offset < t + n) {
       const a = this.elfSha256Offset - t;
       if (a < this.SEG_HEADER_LEN || a + this.SHA256_DIGEST_LEN > n)
-        throw new k(`Cannot place SHA256 digest on segment boundary(elf_sha256_offset=${this.elfSha256Offset}, file_pos=${t}, segment_size=${n})`);
+        throw new D(`Cannot place SHA256 digest on segment boundary(elf_sha256_offset=${this.elfSha256Offset}, file_pos=${t}, segment_size=${n})`);
       const s = a - this.SEG_HEADER_LEN;
       if (!i.slice(s, s + this.SHA256_DIGEST_LEN).every((d) => d === 0))
-        throw new k(`Contents of segment at SHA256 digest offset 0x${this.elfSha256Offset.toString(16)} are not all zero. Refusing to overwrite.`);
+        throw new D(`Contents of segment at SHA256 digest offset 0x${this.elfSha256Offset.toString(16)} are not all zero. Refusing to overwrite.`);
       if (!this.elfSha256 || this.elfSha256.length !== this.SHA256_DIGEST_LEN)
-        throw new k("ELF SHA256 digest is not properly initialized");
-      const h = i.slice(0, s), o = i.slice(s + this.SHA256_DIGEST_LEN), c = h.length + this.elfSha256.length + o.length, u = new Uint8Array(c);
-      return u.set(h, 0), u.set(this.elfSha256, h.length), u.set(o, h.length + this.elfSha256.length), u;
+        throw new D("ELF SHA256 digest is not properly initialized");
+      const h = i.slice(0, s), o = i.slice(s + this.SHA256_DIGEST_LEN), c = h.length + this.elfSha256.length + o.length, _ = new Uint8Array(c);
+      return _.set(h, 0), _.set(this.elfSha256, h.length), _.set(o, h.length + this.elfSha256.length), _;
     }
     return i;
   }
@@ -2405,7 +2405,7 @@ class Ze {
     const i = this.segments.filter((t) => this.isIromAddr(t.addr));
     if (i.length > 0) {
       if (i.length !== 1)
-        throw new k(`Found ${i.length} segments that could be irom0. Bad ELF file?`);
+        throw new D(`Found ${i.length} segments that could be irom0. Bad ELF file?`);
       return i[0];
     }
     return null;
@@ -2436,7 +2436,7 @@ class Ze {
       console.warn(`WARNING: Changing MMU page size is not supported on ${this.ROM_LOADER.CHIP_NAME}! ` + (this.IROM_ALIGN !== 0 ? `Defaulting to ${this.IROM_ALIGN / 1024}KB.` : ""));
     else if (this.MMU_PAGE_SIZE_CONF && !this.MMU_PAGE_SIZE_CONF.includes(i)) {
       const t = this.MMU_PAGE_SIZE_CONF.map((n) => `${n / 1024}KB`).join(", ");
-      throw new k(`${i} bytes is not a valid ${this.ROM_LOADER.CHIP_NAME} page size, select from ${t}.`);
+      throw new D(`${i} bytes is not a valid ${this.ROM_LOADER.CHIP_NAME} page size, select from ${t}.`);
     } else
       this.IROM_ALIGN = i;
   }
@@ -2490,7 +2490,7 @@ class at extends Ze {
       let h = s[0].addr;
       for (const o of s.slice(1)) {
         if (Math.floor(o.addr / this.IROM_ALIGN) === Math.floor(h / this.IROM_ALIGN))
-          throw new k(`Segment loaded at 0x${o.addr.toString(16)} lands in same 64KB flash mapping as segment loaded at 0x${h.toString(16)}. Can't generate binary. Suggest changing linker script or ELF to merge sections.`);
+          throw new D(`Segment loaded at 0x${o.addr.toString(16)} lands in same 64KB flash mapping as segment loaded at 0x${h.toString(16)}. Can't generate binary. Suggest changing linker script or ELF to merge sections.`);
         h = o.addr;
       }
     }
@@ -2503,8 +2503,8 @@ class at extends Ze {
         if (o > 0) {
           const c = this.ROM_LOADER.BOOTLOADER_FLASH_OFFSET - this.SEG_HEADER_LEN;
           o < c && (o += this.IROM_ALIGN), o -= this.ROM_LOADER.BOOTLOADER_FLASH_OFFSET;
-          const u = new nt(0, new Uint8Array(o).fill(0), n);
-          a = this.saveSegment(t, n, u, a), n += 8 + o, i++;
+          const _ = new nt(0, new Uint8Array(o).fill(0), n);
+          a = this.saveSegment(t, n, _, a), n += 8 + o, i++;
         }
         this.saveFlashSegment(t, n, h), n += 8 + h.data.length, i++;
       }
@@ -2535,8 +2535,8 @@ class at extends Ze {
       const h = (n + this.SEG_HEADER_LEN) % this.IROM_ALIGN, o = 16;
       let c = 0;
       this.securePad === "1" ? c = 112 : this.securePad === "2" && (c = 32);
-      const u = (this.IROM_ALIGN - h - o - c) % this.IROM_ALIGN, d = new nt(0, new Uint8Array(u).fill(0), n);
-      a = this.saveSegment(t, n, d, a), n += 8 + u, i++;
+      const _ = (this.IROM_ALIGN - h - o - c) % this.IROM_ALIGN, d = new nt(0, new Uint8Array(_).fill(0), n);
+      a = this.saveSegment(t, n, d, a), n += 8 + _, i++;
     }
     this.ramOnlyHeader || (this.appendChecksum(t, n, a), n = Pt(n, 16));
     const l = n;
@@ -2617,8 +2617,8 @@ class ft extends Ze {
     const o = this.loadCommonHeader(t, n, Zt);
     n += 8, s !== this.flashMode && console.warn(`WARNING: Flash mode value in first header (0x${s.toString(16)}) disagrees with second (0x${this.flashMode.toString(16)}). Using second value.`), r !== this.flashSizeFreq && console.warn(`WARNING: Flash size/freq value in first header (0x${r.toString(16)}) disagrees with second (0x${this.flashSizeFreq.toString(16)}). Using second value.`), l !== this.entrypoint && console.warn(`WARNING: Entrypoint address in first header (0x${l.toString(16)}) disagrees with second header (0x${this.entrypoint.toString(16)}). Using second value.`);
     for (let c = 0; c < o; c++) {
-      const u = this.loadSegment(t, n);
-      n += 8 + u.data.length;
+      const _ = this.loadSegment(t, n);
+      n += 8 + _.data.length;
     }
     this.checksum = this.readChecksum(t, n), this.verify();
   }
@@ -2713,7 +2713,7 @@ async function Bi(e, i) {
         a = br;
         break;
       default:
-        throw new k(`Unsupported chip name: ${n}`);
+        throw new D(`Unsupported chip name: ${n}`);
     }
   else {
     const l = t[0];
@@ -2722,7 +2722,7 @@ async function Bi(e, i) {
     else if (l === ft.IMAGE_V2_MAGIC)
       a = ft;
     else
-      throw new k(`Invalid image magic number: ${l}`);
+      throw new D(`Invalid image magic number: ${l}`);
   }
   const s = new a(e), r = s;
   if (typeof r.loadFromFile == "function") {
@@ -2734,49 +2734,49 @@ async function Bi(e, i) {
 async function xr(e) {
   switch (e) {
     case 15736195: {
-      const { ESP32ROM: i } = await import("./esp32-D_Iy8qXT.mjs");
+      const { ESP32ROM: i } = await import("./esp32-C4gWzMQq.mjs");
       return new i();
     }
     case 203546735:
     case 1867591791:
     case 2084675695: {
-      const { ESP32C2ROM: i } = await import("./esp32c2-CXkcp8EO.mjs");
+      const { ESP32C2ROM: i } = await import("./esp32c2-DNto51ad.mjs");
       return new i();
     }
     case 1763790959:
     case 456216687:
     case 1216438383:
     case 1130455151: {
-      const { ESP32C3ROM: i } = await import("./esp32c3-CQYyY32c.mjs");
+      const { ESP32C3ROM: i } = await import("./esp32c3-CHOhYetu.mjs");
       return new i();
     }
     case 752910447: {
-      const { ESP32C6ROM: i } = await import("./esp32c6-C6snyMX6.mjs");
+      const { ESP32C6ROM: i } = await import("./esp32c6-DnFNt6_V.mjs");
       return new i();
     }
     case 606167151:
     case 871374959:
     case 1333878895: {
-      const { ESP32C61ROM: i } = await import("./esp32c61-BSOYk6F3.mjs");
+      const { ESP32C61ROM: i } = await import("./esp32c61-Cc1oJ4uN.mjs");
       return new i();
     }
     case 285294703:
     case 1675706479:
     case 1607549039: {
-      const { ESP32C5ROM: i } = await import("./esp32c5-DEJykOsR.mjs");
+      const { ESP32C5ROM: i } = await import("./esp32c5-Cz4lla_-.mjs");
       return new i();
     }
     case 3619110528:
     case 2548236392: {
-      const { ESP32H2ROM: i } = await import("./esp32h2-BvJSTt5D.mjs");
+      const { ESP32H2ROM: i } = await import("./esp32h2-L3CN08i5.mjs");
       return new i();
     }
     case 9: {
-      const { ESP32S3ROM: i } = await import("./esp32s3-BWYq7mX9.mjs");
+      const { ESP32S3ROM: i } = await import("./esp32s3-9tDc6joa.mjs");
       return new i();
     }
     case 1990: {
-      const { ESP32S2ROM: i } = await import("./esp32s2-DEERqwjU.mjs");
+      const { ESP32S2ROM: i } = await import("./esp32s2-CirD9RZ7.mjs");
       return new i();
     }
     case 4293968129: {
@@ -2786,7 +2786,7 @@ async function xr(e) {
     case 0:
     case 182303440:
     case 117676761: {
-      const { ESP32P4ROM: i } = await import("./esp32p4-z60zYEu-.mjs");
+      const { ESP32P4ROM: i } = await import("./esp32p4-CSyyHlo7.mjs");
       return new i();
     }
     default:
@@ -2829,9 +2829,9 @@ class Ar {
       57: "32MB",
       58: "64MB"
     }, this.USB_JTAG_SERIAL_PID = 4097, this.romBaudrate = 115200, this.debugLogging = !1, this.syncStubDetected = !1, this.IS_STUB = !1, this.FLASH_WRITE_SIZE = 16384, this.transport = i.transport, this.baudrate = i.baudrate, this.resetConstructors = {
-      classicReset: (c, u) => new nr(c, u),
-      customReset: (c, u) => new or(c, u),
-      hardReset: (c, u) => new sr(c, u),
+      classicReset: (c, _) => new nr(c, _),
+      customReset: (c, _) => new or(c, _),
+      hardReset: (c, _) => new sr(c, _),
       usbJTAGSerialReset: (c) => new ar(c)
     }, i.serialOptions && (this.serialOptions = i.serialOptions), i.terminal && (this.terminal = i.terminal, this.terminal.clean()), typeof i.debugLogging < "u" && (this.debugLogging = i.debugLogging), i.port && (this.transport = new vn(i.port)), typeof i.enableTracing < "u" && (this.transport.tracing = i.enableTracing), !((t = i.resetConstructors) === null || t === void 0) && t.classicReset && (this.resetConstructors.classicReset = (n = i.resetConstructors) === null || n === void 0 ? void 0 : n.classicReset), !((a = i.resetConstructors) === null || a === void 0) && a.customReset && (this.resetConstructors.customReset = (s = i.resetConstructors) === null || s === void 0 ? void 0 : s.customReset), !((r = i.resetConstructors) === null || r === void 0) && r.hardReset && (this.resetConstructors.hardReset = (l = i.resetConstructors) === null || l === void 0 ? void 0 : l.hardReset), !((h = i.resetConstructors) === null || h === void 0) && h.usbJTAGSerialReset && (this.resetConstructors.usbJTAGSerialReset = (o = i.resetConstructors) === null || o === void 0 ? void 0 : o.usbJTAGSerialReset), this.info("esptool.js"), this.info("Serial port " + this.transport.getInfo());
   }
@@ -2964,10 +2964,10 @@ class Ar {
         if (i == null || r == i)
           return [l, h];
         if (h[0] != 0 && h[1] == this.ROM_INVALID_RECV_MSG)
-          throw this.transport.flushInput(), new k("unsupported command error");
+          throw this.transport.flushInput(), new D("unsupported command error");
       }
     }
-    throw new k("invalid response");
+    throw new D("invalid response");
   }
   /**
    * Write a serial command to the chip
@@ -3041,13 +3041,13 @@ class Ar {
    */
   async _connectAttempt(i = "default_reset", t) {
     this.debug("_connect_attempt " + i), t && await t.reset();
-    const n = this.transport.peek(), a = Array.from(n, (u) => String.fromCharCode(u)).join(""), s = /boot:(0x[0-9a-fA-F]+)([\s\S]*?waiting for download)?/, r = a.match(s);
+    const n = this.transport.peek(), a = Array.from(n, (_) => String.fromCharCode(_)).join(""), s = /boot:(0x[0-9a-fA-F]+)([\s\S]*?waiting for download)?/, r = a.match(s);
     let l = !1, h = "", o = !1;
     r && (l = !0, h = r[1], o = !!r[2]), this.debug(`bootMode:${h} downloadMode:${o}`);
     let c = "";
-    for (let u = 0; u < 5; u++)
+    for (let _ = 0; _ < 5; _++)
       try {
-        this.debug(`Sync connect attempt ${u}`), this.transport.flushInput();
+        this.debug(`Sync connect attempt ${_}`), this.transport.flushInput();
         const d = await this.sync();
         return this.debug(d[0].toString()), "success";
       } catch (d) {
@@ -3093,14 +3093,14 @@ class Ar {
         break;
     }
     if (a !== "success")
-      throw new k("Failed to connect with the device");
+      throw new D("Failed to connect with the device");
     if (this.debug("Connect attempt successful."), this.info(`
 \r`, !1), n) {
       const r = await this.readReg(this.CHIP_DETECT_MAGIC_REG_ADDR) >>> 0;
       this.debug("Chip Magic " + r.toString(16));
       const l = await xr(r);
       if (typeof this.chip === null)
-        throw new k(`Unexpected CHIP magic value ${r}. Failed to autodetect chip type.`);
+        throw new D(`Unexpected CHIP magic value ${r}. Failed to autodetect chip type.`);
       this.chip = l;
     }
   }
@@ -3126,12 +3126,12 @@ class Ar {
     const l = 2, h = await this.command(t, n, a, void 0, r);
     if (h && h[1] && h[1].length < s + l) {
       const c = h[1].slice(0, 2);
-      throw c[0] !== 0 ? new k(`Failed to ${i} failed with status ${c}`) : new k(`Failed to ${i}.
+      throw c[0] !== 0 ? new D(`Failed to ${i} failed with status ${c}`) : new D(`Failed to ${i}.
  Only got ${h[1].length} bytes of data.`);
     }
     const o = h[1].slice(s, s + l);
     if (o[0] !== 0)
-      throw new k(`Failed to ${i} failed with status ${o}`);
+      throw new D(`Failed to ${i} failed with status ${o}`);
     return s > 0 ? h[1].slice(0, s) : h[0];
   }
   /**
@@ -3149,9 +3149,9 @@ class Ar {
           [o.bss_start || o.data_start, o.data_start + o.decodedData.length],
           [o.text_start, o.text_start + o.decodedText.length]
         ];
-        for (const [u, d] of c)
-          if (r < d && l > u)
-            throw new k(`Software loader is resident at 0x${u.toString(16).padStart(8, "0")}-0x${d.toString(16).padStart(8, "0")}.
+        for (const [_, d] of c)
+          if (r < d && l > _)
+            throw new D(`Software loader is resident at 0x${_.toString(16).padStart(8, "0")}-0x${d.toString(16).padStart(8, "0")}.
             Can't load binary at overlapping address range 0x${r.toString(16).padStart(8, "0")}-0x${l.toString(16).padStart(8, "0")}.
             Either change binary loading address, or use the no-stub option to disable the software loader.`);
       }
@@ -3236,8 +3236,8 @@ class Ar {
     this.IS_STUB ? (h = i, o = this.DEFAULT_TIMEOUT) : (h = s * this.FLASH_WRITE_SIZE, o = this.timeoutPerMb(this.ERASE_REGION_TIMEOUT_PER_MB, h)), this.info("Compressed " + i + " bytes to " + t + "...");
     let c = this._appendArray(this._intToByteArray(h), this._intToByteArray(a));
     c = this._appendArray(c, this._intToByteArray(this.FLASH_WRITE_SIZE)), c = this._appendArray(c, this._intToByteArray(n)), (this.chip.CHIP_NAME === "ESP32-S2" || this.chip.CHIP_NAME === "ESP32-S3" || this.chip.CHIP_NAME === "ESP32-C3" || this.chip.CHIP_NAME === "ESP32-C2") && this.IS_STUB === !1 && (c = this._appendArray(c, this._intToByteArray(0))), await this.checkCommand("enter compressed flash mode", this.ESP_FLASH_DEFL_BEGIN, c, void 0, void 0, o);
-    const u = r.getTime();
-    return i != 0 && this.IS_STUB === !1 && this.info("Took " + (u - l) / 1e3 + "." + (u - l) % 1e3 + "s to erase flash block"), a;
+    const _ = r.getTime();
+    return i != 0 && this.IS_STUB === !1 && this.info("Took " + (_ - l) / 1e3 + "." + (_ - l) % 1e3 + "s to erase flash block"), a;
   }
   /**
    * Write block to flash, retry if fail
@@ -3303,46 +3303,46 @@ class Ar {
    * @returns {number} Register SPI_W0_REG value
    */
   async runSpiflashCommand(i, t, n, a = null, s = 0, r = 0) {
-    const d = this.chip.SPI_REG_BASE, f = d + 0, g = d + 4, y = d + this.chip.SPI_USR_OFFS, p = d + this.chip.SPI_USR1_OFFS, w = d + this.chip.SPI_USR2_OFFS, E = d + this.chip.SPI_W0_OFFS;
+    const d = this.chip.SPI_REG_BASE, f = d + 0, g = d + 4, A = d + this.chip.SPI_USR_OFFS, E = d + this.chip.SPI_USR1_OFFS, b = d + this.chip.SPI_USR2_OFFS, S = d + this.chip.SPI_W0_OFFS;
     let m;
     this.chip.SPI_MOSI_DLEN_OFFS != null ? m = async (F, U) => {
       const z = d + this.chip.SPI_MOSI_DLEN_OFFS, he = d + this.chip.SPI_MISO_DLEN_OFFS;
       F > 0 && await this.writeReg(z, F - 1), U > 0 && await this.writeReg(he, U - 1);
       let _t = 0;
-      r > 0 && (_t |= r - 1), s > 0 && (_t |= s - 1 << D), _t && await this.writeReg(p, _t);
+      r > 0 && (_t |= r - 1), s > 0 && (_t |= s - 1 << v), _t && await this.writeReg(E, _t);
     } : m = async (F, U) => {
-      const z = p, he = 17, _t = 8, kn = F === 0 ? 0 : F - 1;
+      const z = E, he = 17, _t = 8, kn = F === 0 ? 0 : F - 1;
       let ce = (U === 0 ? 0 : U - 1) << _t | kn << he;
-      r > 0 && (ce |= r - 1), s > 0 && (ce |= s - 1 << D), await this.writeReg(z, ce);
+      r > 0 && (ce |= r - 1), s > 0 && (ce |= s - 1 << v), await this.writeReg(z, ce);
     };
-    const _ = 1 << 18, R = 28, D = 26;
+    const u = 1 << 18, w = 28, v = 26;
     if (n > 32)
-      throw new k("Reading more than 32 bits back from a SPI flash operation is unsupported");
+      throw new D("Reading more than 32 bits back from a SPI flash operation is unsupported");
     if (t.length > 64)
-      throw new k("Writing more than 64 bytes of data with one SPI command is unsupported");
-    const S = t.length * 8, T = await this.readReg(y), A = await this.readReg(w);
-    let b = -2147483648;
-    n > 0 && (b |= 268435456), S > 0 && (b |= 134217728), s > 0 && (b |= 1073741824), r > 0 && (b |= 536870912), await m(S, n), await this.writeReg(y, b);
-    let x = 7 << R | i;
-    if (await this.writeReg(w, x), a && s > 0 && (this.SPI_ADDR_REG_MSB && (a = a << 32 - s), await this.writeReg(g, a)), S == 0)
-      await this.writeReg(E, 0);
+      throw new D("Writing more than 64 bytes of data with one SPI command is unsupported");
+    const p = t.length * 8, I = await this.readReg(A), x = await this.readReg(b);
+    let y = -2147483648;
+    n > 0 && (y |= 268435456), p > 0 && (y |= 134217728), s > 0 && (y |= 1073741824), r > 0 && (y |= 536870912), await m(p, n), await this.writeReg(A, y);
+    let R = 7 << w | i;
+    if (await this.writeReg(b, R), a && s > 0 && (this.SPI_ADDR_REG_MSB && (a = a << 32 - s), await this.writeReg(g, a)), p == 0)
+      await this.writeReg(S, 0);
     else {
       t = Fe(t, 4, 0);
       const F = [];
       for (let z = 0; z < t.length; z += 4)
         F.push((t[z] | t[z + 1] << 8 | t[z + 2] << 16 | t[z + 3] << 24) >>> 0);
-      let U = E;
+      let U = S;
       for (const z of F)
         await this.writeReg(U, z), U += 4;
     }
-    await this.writeReg(f, _);
+    await this.writeReg(f, u);
     let H;
-    for (H = 0; H < 10 && (x = await this.readReg(f) & _, x != 0); H++)
+    for (H = 0; H < 10 && (R = await this.readReg(f) & u, R != 0); H++)
       ;
     if (H === 10)
-      throw new k("SPI command did not complete in time");
-    const Wt = await this.readReg(E);
-    return await this.writeReg(y, T), await this.writeReg(w, A), Wt;
+      throw new D("SPI command did not complete in time");
+    const Wt = await this.readReg(S);
+    return await this.writeReg(A, I), await this.writeReg(b, x), Wt;
   }
   /**
    * Read flash id by executing the SPIFLASH_RDID flash command.
@@ -3397,14 +3397,14 @@ class Ar {
     a = this._appendArray(a, this._intToByteArray(4096)), a = this._appendArray(a, this._intToByteArray(1024));
     const s = await this.checkCommand("read flash", this.ESP_READ_FLASH, a);
     if (s != 0)
-      throw new k("Failed to read memory: " + s);
+      throw new D("Failed to read memory: " + s);
     let r = new Uint8Array(0);
     for (; r.length < t; ) {
       const l = await this.transport.read(this.FLASH_READ_TIMEOUT);
       if (l instanceof Uint8Array)
         l.length > 0 && (r = this._appendArray(r, l), await this.transport.write(this._intToByteArray(r.length)), n && n(l, r.length, t));
       else
-        throw new k("Failed to read memory: " + l);
+        throw new D("Failed to read memory: " + l);
     }
     return r;
   }
@@ -3425,14 +3425,14 @@ class Ar {
         const l = r === 0 ? t.text_start : t.data_start, h = n[r].length, o = Math.floor((h + this.ESP_RAM_BLOCK - 1) / this.ESP_RAM_BLOCK);
         await this.memBegin(h, o, this.ESP_RAM_BLOCK, l);
         for (let c = 0; c < o; c++) {
-          const u = c * this.ESP_RAM_BLOCK, d = u + this.ESP_RAM_BLOCK;
-          await this.memBlock(n[r].slice(u, d), c);
+          const _ = c * this.ESP_RAM_BLOCK, d = _ + this.ESP_RAM_BLOCK;
+          await this.memBlock(n[r].slice(_, d), c);
         }
       }
     this.info("Running stub..."), await this.memFinish(t.entry);
     const a = await this.transport.read(this.DEFAULT_TIMEOUT), s = String.fromCharCode(...a);
     if (s !== "OHAI")
-      throw new k(`Failed to start stub. Unexpected response ${s}`);
+      throw new D(`Failed to start stub. Unexpected response ${s}`);
     return this.info("Stub running..."), this.IS_STUB = !0, this.chip;
   }
   /**
@@ -3463,7 +3463,7 @@ read/write operations will fail.
 Try checking the chip connections or removing
 any other hardware connected to IOs.`);
     } catch (n) {
-      throw new k("Unable to verify flash chip connection " + n);
+      throw new D("Unable to verify flash chip connection " + n);
     }
     return t;
   }
@@ -3483,7 +3483,7 @@ any other hardware connected to IOs.`);
    */
   parseFlashSizeArg(i) {
     if (typeof this.chip.FLASH_SIZES[i] > "u")
-      throw new k("Flash size " + i + " is not supported by this chip type. Supported sizes: " + this.chip.FLASH_SIZES);
+      throw new D("Flash size " + i + " is not supported by this chip type. Supported sizes: " + this.chip.FLASH_SIZES);
     return this.chip.FLASH_SIZES[i];
   }
   /**
@@ -3514,24 +3514,24 @@ any other hardware connected to IOs.`);
     n !== "keep" && (l = { qio: 0, qout: 1, dio: 2, dout: 3 }[n]);
     let c = h & 15;
     a !== "keep" && (c = { "40m": 0, "26m": 1, "20m": 2, "80m": 15 }[a]);
-    let u = h & 240;
+    let _ = h & 240;
     if (s !== "keep")
       if (s === "detect") {
         this.info("Configuring flash size...");
         const g = await this.detectFlashSize();
-        this.info("Detected flash size set to " + g), u = this.parseFlashSizeArg(g);
+        this.info("Detected flash size set to " + g), _ = this.parseFlashSizeArg(g);
       } else
-        u = this.parseFlashSizeArg(s);
-    const d = l << 8 | c + u;
+        _ = this.parseFlashSizeArg(s);
+    const d = l << 8 | c + _;
     this.info("Flash params set to " + d.toString(16));
     const f = new Uint8Array(i);
-    if (i[2] !== l && (f[2] = l), i[3] !== c + u && (f[3] = c + u), o) {
-      const g = await Bi(this.chip, f), y = f.slice(0, g.datalength), p = f.slice(g.datalength + g.SHA256_DIGEST_LEN), w = await crypto.subtle.digest("SHA-256", p), E = new Uint8Array(w), m = new Uint8Array(y.length + E.length + p.length);
-      m.set(y, 0), m.set(E, y.length), m.set(p, y.length + E.length);
-      const _ = m.slice(g.datalength, g.datalength + g.SHA256_DIGEST_LEN);
-      return this.transport.hexify(E) === this.transport.hexify(_) ? this.info("SHA digest in image updated") : this.info(`WARNING: SHA recalculation for binary failed!
-	Expected calculated SHA: ${this.transport.hexify(E)}
-	SHA stored in binary:    ${this.transport.hexify(_)}`), m;
+    if (i[2] !== l && (f[2] = l), i[3] !== c + _ && (f[3] = c + _), o) {
+      const g = await Bi(this.chip, f), A = f.slice(0, g.datalength), E = f.slice(g.datalength + g.SHA256_DIGEST_LEN), b = await crypto.subtle.digest("SHA-256", E), S = new Uint8Array(b), m = new Uint8Array(A.length + S.length + E.length);
+      m.set(A, 0), m.set(S, A.length), m.set(E, A.length + S.length);
+      const u = m.slice(g.datalength, g.datalength + g.SHA256_DIGEST_LEN);
+      return this.transport.hexify(S) === this.transport.hexify(u) ? this.info("SHA digest in image updated") : this.info(`WARNING: SHA recalculation for binary failed!
+	Expected calculated SHA: ${this.transport.hexify(S)}
+	SHA stored in binary:    ${this.transport.hexify(u)}`), m;
     }
     return f;
   }
@@ -3544,7 +3544,7 @@ any other hardware connected to IOs.`);
       const a = this.flashSizeBytes(i.flashSize);
       for (let s = 0; s < i.fileArray.length; s++)
         if (i.fileArray[s].data.length + i.fileArray[s].address > a)
-          throw new k(`File ${s + 1} doesn't fit in the available flash`);
+          throw new D(`File ${s + 1} doesn't fit in the available flash`);
     }
     this.IS_STUB === !0 && i.eraseAll === !0 && await this.eraseFlash();
     let t, n;
@@ -3562,35 +3562,35 @@ any other hardware connected to IOs.`);
       let h = 0, o = 0;
       const c = t.length;
       i.reportProgress && i.reportProgress(a, 0, c);
-      let u = /* @__PURE__ */ new Date();
-      const d = u.getTime();
+      let _ = /* @__PURE__ */ new Date();
+      const d = _.getTime();
       let f = 5e3;
       const g = new ir({ chunkSize: 1 });
-      let y = 0;
-      g.onData = function(E) {
-        y += E.byteLength;
+      let A = 0;
+      g.onData = function(S) {
+        A += S.byteLength;
       };
-      let p = 0;
-      for (; p < t.length; ) {
-        this.debug("Write loop " + n + " " + h + " " + l), this.info("Writing at 0x" + (n + y).toString(16) + "... (" + Math.floor(100 * (h + 1) / l) + "%)");
-        const E = Math.min(this.FLASH_WRITE_SIZE, t.length - p), m = t.slice(p, p + E), _ = p + E >= t.length;
+      let E = 0;
+      for (; E < t.length; ) {
+        this.debug("Write loop " + n + " " + h + " " + l), this.info("Writing at 0x" + (n + A).toString(16) + "... (" + Math.floor(100 * (h + 1) / l) + "%)");
+        const S = Math.min(this.FLASH_WRITE_SIZE, t.length - E), m = t.slice(E, E + S), u = E + S >= t.length;
         if (i.compress) {
-          const R = y;
-          g.push(m, _);
-          const D = y - R;
-          let S = 3e3;
-          this.timeoutPerMb(this.ERASE_WRITE_TIMEOUT_PER_MB, D) > 3e3 && (S = this.timeoutPerMb(this.ERASE_WRITE_TIMEOUT_PER_MB, D)), this.IS_STUB === !1 && (f = S), await this.flashDeflBlock(m, h, f), this.IS_STUB && (f = S);
+          const w = A;
+          g.push(m, u);
+          const v = A - w;
+          let p = 3e3;
+          this.timeoutPerMb(this.ERASE_WRITE_TIMEOUT_PER_MB, v) > 3e3 && (p = this.timeoutPerMb(this.ERASE_WRITE_TIMEOUT_PER_MB, v)), this.IS_STUB === !1 && (f = p), await this.flashDeflBlock(m, h, f), this.IS_STUB && (f = p);
         } else
-          throw new k("Yet to handle Non Compressed writes");
-        o += m.length, p += E, h++, i.reportProgress && i.reportProgress(a, o, c);
+          throw new D("Yet to handle Non Compressed writes");
+        o += m.length, E += S, h++, i.reportProgress && i.reportProgress(a, o, c);
       }
-      this.IS_STUB && (i.compress ? await this.flashDeflFinish(!1, f) : await this.flashFinish(!1, f)), u = /* @__PURE__ */ new Date();
-      const w = u.getTime() - d;
-      if (i.compress && this.info("Wrote " + r + " bytes (" + o + " compressed) at 0x" + n.toString(16) + " in " + w / 1e3 + " seconds."), s) {
+      this.IS_STUB && (i.compress ? await this.flashDeflFinish(!1, f) : await this.flashFinish(!1, f)), _ = /* @__PURE__ */ new Date();
+      const b = _.getTime() - d;
+      if (i.compress && this.info("Wrote " + r + " bytes (" + o + " compressed) at 0x" + n.toString(16) + " in " + b / 1e3 + " seconds."), s) {
         this.info("File  md5: " + s);
-        const E = await this.flashMd5sum(n, r);
-        if (this.info("Flash md5: " + E), new String(E).valueOf() != new String(s).valueOf())
-          throw new k("MD5 of file does not match data in flash!");
+        const S = await this.flashMd5sum(n, r);
+        if (this.info("Flash md5: " + S), new String(S).valueOf() != new String(s).valueOf())
+          throw new D("MD5 of file does not match data in flash!");
         this.info("Hash of data verified.");
       }
     }
@@ -3619,7 +3619,7 @@ any other hardware connected to IOs.`);
   async softReset(i) {
     if (this.IS_STUB) {
       if (this.chip.CHIP_NAME != "ESP8266")
-        throw new k("Soft resetting is currently only supported on ESP8266");
+        throw new D("Soft resetting is currently only supported on ESP8266");
       i ? (await this.flashBegin(0, 0), await this.flashFinish(!0)) : await this.command(this.ESP_RUN_USER_CODE, void 0, void 0, !1);
     } else {
       if (i)
@@ -4000,9 +4000,9 @@ class $i extends EventTarget {
         this.logger.error(`Received result for command ${o} but expected ${this._rpcFeedback.command}`);
         return;
       }
-      const c = [], u = r[1], d = new TextDecoder("utf-8");
+      const c = [], _ = r[1], d = new TextDecoder("utf-8");
       let f = 2;
-      for (; f < 2 + u; )
+      for (; f < 2 + _; )
         c.push(d.decode(new Uint8Array(r.slice(f + 1, f + r[f] + 1)))), f += r[f] + 1;
       "receivedData" in this._rpcFeedback ? c.length > 0 ? this._rpcFeedback.receivedData.push(c) : this._rpcFeedback.resolve(this._rpcFeedback.receivedData) : this._rpcFeedback.resolve(c);
     } else
@@ -4076,27 +4076,31 @@ async function Pr(e) {
     <input id="improv-password" type="password" placeholder="Wi-Fi password" style="width:100%;box-sizing:border-box;padding:9px;background:#0f1215;color:#eee;border:1px solid #3a424b;border-radius:4px" />
     <div id="improv-actions" style="display:flex;gap:10px;margin-top:18px"><button id="improv-rescan" style="padding:9px 12px">Scan again</button><button id="improv-connect" style="padding:9px 12px;background:#287f45;color:#fff;border:1px solid #3ea65e;border-radius:4px;font-weight:700">Connect</button><button id="improv-skip" style="margin-left:auto;padding:9px 12px">Skip</button></div>
   </div>`, document.body.appendChild(t);
-  const n = t.querySelector("#improv-message"), a = t.querySelector("#improv-ssid"), s = t.querySelector("#improv-manual-ssid"), r = t.querySelector("#improv-password"), l = t.querySelector("#improv-actions");
-  let h;
-  const o = async () => {
-    if (!h) return;
-    const p = h;
-    h = void 0, await p();
-  }, c = (p) => {
-    if (a.innerHTML = '<option value="">Enter network manually</option>', !p) {
+  const n = t.querySelector("#improv-message"), a = t.querySelector("#improv-ssid"), s = t.querySelector("#improv-manual-ssid"), r = t.querySelector("#improv-password"), l = t.querySelector("#improv-actions"), h = t.querySelector("#improv-rescan"), o = t.querySelector("#improv-connect"), c = t.querySelector("#improv-skip");
+  let _ = !1;
+  const d = (w) => {
+    _ = w, a.disabled = w, s.disabled = w, r.disabled = w, h.disabled = w, o.disabled = w, c.disabled = w, o.textContent = w ? "Connecting…" : "Connect";
+  };
+  let f;
+  const g = async () => {
+    if (!f) return;
+    const w = f;
+    f = void 0, await w();
+  }, A = (w) => {
+    if (a.innerHTML = '<option value="">Enter network manually</option>', !w) {
       n.textContent = "Network scan unavailable. Enter the network name manually.";
       return;
     }
-    for (const w of p) {
-      const E = document.createElement("option");
-      E.value = w.name, E.textContent = `${w.name}${w.secured ? " 🔒" : ""}`, a.appendChild(E);
+    for (const v of w) {
+      const p = document.createElement("option");
+      p.value = v.name, p.textContent = `${v.name}${v.secured ? " 🔒" : ""}`, a.appendChild(p);
     }
-    n.textContent = p.length ? "Choose a network or enter one manually." : "No networks found yet. Keep this dialog open or enter the network name manually.";
-  }, u = async () => {
-    await o(), n.textContent = "Scanning nearby 2.4 GHz networks…", h = i.subscribeSSIDs(c);
-  }, d = async () => {
+    n.textContent = w.length ? "Choose a network or enter one manually." : "The controller's Wi-Fi scan returned no networks. Enter the network name manually.";
+  }, E = async () => {
+    await g(), n.textContent = "Scanning nearby 2.4 GHz networks…", f = i.subscribeSSIDs(A);
+  }, b = async () => {
     if (!await Promise.race([
-      o().then(() => !0).catch(() => !1),
+      g().then(() => !0).catch(() => !1),
       Tt(2500).then(() => !1)
     ])) {
       n.textContent = "Restarting the Wi-Fi setup connection…";
@@ -4110,8 +4114,8 @@ async function Pr(e) {
       }
       await Tt(150), await e.open({ baudRate: 115200, bufferSize: 8192 }), i = new $i(e, console), await i.initialize(1e4);
     }
-  }, f = async () => {
-    await o();
+  }, S = async () => {
+    await g();
     try {
       await i.close();
     } catch {
@@ -4120,42 +4124,52 @@ async function Pr(e) {
       await e.close();
     } catch {
     }
-  }, g = async (p) => (t.remove(), await f(), p), y = async () => {
-    const p = i.nextUrl;
-    if (await f(), n.textContent = p ? "Wi-Fi settings sent. WLED reported this address:" : "Wi-Fi settings sent. The controller is connecting to your network.", a.disabled = s.disabled = r.disabled = !0, l.innerHTML = "", p)
+  }, m = async (w) => (t.remove(), await S(), w), u = async () => {
+    const w = i.nextUrl;
+    if (await S(), n.textContent = w ? "Wi-Fi settings sent. WLED reported this address:" : "Wi-Fi settings sent. The controller is connecting to your network.", a.disabled = s.disabled = r.disabled = !0, l.innerHTML = "", w)
       try {
-        const E = new URL(p);
-        if (E.protocol !== "http:" && E.protocol !== "https:") throw new Error("Unsupported URL protocol");
-        const m = document.createElement("code");
-        m.textContent = E.href, m.style.cssText = "display:block;margin:10px 0;padding:9px;background:#0f1215;border:1px solid #3a424b;border-radius:4px;overflow-wrap:anywhere", n.after(m);
-        const _ = document.createElement("a");
-        _.href = E.href, _.target = "_blank", _.rel = "noopener", _.textContent = "Open WLED in browser", _.style.cssText = "padding:9px 12px;background:#287f45;color:#fff;border:1px solid #3ea65e;border-radius:4px;font-weight:700;text-decoration:none", l.appendChild(_);
+        const p = new URL(w);
+        if (p.protocol !== "http:" && p.protocol !== "https:") throw new Error("Unsupported URL protocol");
+        const I = document.createElement("code");
+        I.textContent = p.href, I.style.cssText = "display:block;margin:10px 0;padding:9px;background:#0f1215;border:1px solid #3a424b;border-radius:4px;overflow-wrap:anywhere", n.after(I);
+        const x = document.createElement("a");
+        x.href = p.href, x.target = "_blank", x.rel = "noopener", x.textContent = "Open WLED in browser", x.style.cssText = "padding:9px 12px;background:#287f45;color:#fff;border:1px solid #3ea65e;border-radius:4px;font-weight:700;text-decoration:none", l.appendChild(x);
       } catch {
         n.textContent = "Wi-Fi settings sent. The controller is connecting to your network.";
       }
-    const w = document.createElement("button");
-    w.textContent = "Done", w.style.cssText = "margin-left:auto;padding:9px 12px", w.addEventListener("click", () => t.remove()), l.appendChild(w);
+    const v = document.createElement("button");
+    v.textContent = "Done", v.style.cssText = "margin-left:auto;padding:9px 12px", v.addEventListener("click", () => t.remove()), l.appendChild(v);
   };
   a.addEventListener("change", () => {
     a.value && (s.value = a.value);
-  }), t.querySelector("#improv-rescan").addEventListener("click", u), t.querySelector("#improv-skip").addEventListener("click", () => g(!1)), t.querySelector("#improv-connect").addEventListener("click", async () => {
-    const p = s.value.trim() || a.value;
-    if (!p) {
+  }), h.addEventListener("click", async () => {
+    if (!_) {
+      h.disabled = !0, h.textContent = "Scanning…";
+      try {
+        await E();
+      } finally {
+        h.disabled = !1, h.textContent = "Scan again";
+      }
+    }
+  }), c.addEventListener("click", () => m(!1)), o.addEventListener("click", async () => {
+    if (_) return;
+    const w = s.value.trim() || a.value;
+    if (!w) {
       n.textContent = "Enter or select a Wi-Fi network first.";
       return;
     }
-    n.textContent = "Preparing Wi-Fi settings…";
+    d(!0), n.textContent = "Preparing Wi-Fi settings…";
     try {
-      await d(), n.textContent = "Sending Wi-Fi settings (this can take up to 45 seconds)…", await Promise.race([
-        i.provision(p, r.value, 45e3),
+      await b(), n.textContent = "Sending Wi-Fi settings (this can take up to 45 seconds)…", await Promise.race([
+        i.provision(w, r.value, 45e3),
         Tt(5e4).then(() => {
           throw new Error("Timed out waiting for the controller to confirm Wi-Fi settings");
         })
-      ]), $("Wi-Fi settings sent. Select the WLED address to open it."), await y();
-    } catch (w) {
-      n.textContent = `Could not send Wi-Fi settings: ${(w == null ? void 0 : w.message) || w}`;
+      ]), $("Wi-Fi settings sent. Select the WLED address to open it."), await u();
+    } catch (v) {
+      n.textContent = `Could not send Wi-Fi settings: ${(v == null ? void 0 : v.message) || v}`, d(!1), await E();
     }
-  }), await u();
+  }), await E();
 }
 async function Or() {
   const e = document.querySelector("#flashBtn"), i = e == null ? void 0 : e.dataset.manifest;
@@ -4186,8 +4200,8 @@ async function Or() {
       flashFreq: "keep",
       eraseAll: !1,
       compress: !0,
-      reportProgress: (o, c, u) => {
-        const d = r.slice(0, o).reduce((y, p) => y + p.data.length, 0), f = c / u * r[o].data.length, g = Math.floor((d + f) / l * 100);
+      reportProgress: (o, c, _) => {
+        const d = r.slice(0, o).reduce((A, E) => A + E.data.length, 0), f = c / _ * r[o].data.length, g = Math.floor((d + f) / l * 100);
         g !== h && (h = g, $(`Writing firmware: ${g}%…`));
       }
     }), await Gi(a, t), await t.disconnect(), $("Flash complete. Opening Wi-Fi setup…");
