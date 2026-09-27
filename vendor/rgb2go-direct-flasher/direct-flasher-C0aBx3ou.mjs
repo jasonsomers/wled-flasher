@@ -2734,49 +2734,49 @@ async function Bi(e, i) {
 async function yr(e) {
   switch (e) {
     case 15736195: {
-      const { ESP32ROM: i } = await import("./esp32-W52zNWQj.mjs");
+      const { ESP32ROM: i } = await import("./esp32-DuSFqeEi.mjs");
       return new i();
     }
     case 203546735:
     case 1867591791:
     case 2084675695: {
-      const { ESP32C2ROM: i } = await import("./esp32c2-BtOyPsgm.mjs");
+      const { ESP32C2ROM: i } = await import("./esp32c2-CfrjxC0P.mjs");
       return new i();
     }
     case 1763790959:
     case 456216687:
     case 1216438383:
     case 1130455151: {
-      const { ESP32C3ROM: i } = await import("./esp32c3-B3OJ1aoh.mjs");
+      const { ESP32C3ROM: i } = await import("./esp32c3-Cfpg5JkQ.mjs");
       return new i();
     }
     case 752910447: {
-      const { ESP32C6ROM: i } = await import("./esp32c6-fPXvtUyK.mjs");
+      const { ESP32C6ROM: i } = await import("./esp32c6-DT-mDXdb.mjs");
       return new i();
     }
     case 606167151:
     case 871374959:
     case 1333878895: {
-      const { ESP32C61ROM: i } = await import("./esp32c61-RQPsnbc2.mjs");
+      const { ESP32C61ROM: i } = await import("./esp32c61-BGgp5GPk.mjs");
       return new i();
     }
     case 285294703:
     case 1675706479:
     case 1607549039: {
-      const { ESP32C5ROM: i } = await import("./esp32c5-Dcw8IJK6.mjs");
+      const { ESP32C5ROM: i } = await import("./esp32c5-BFdU8jRx.mjs");
       return new i();
     }
     case 3619110528:
     case 2548236392: {
-      const { ESP32H2ROM: i } = await import("./esp32h2-KU6zWAdu.mjs");
+      const { ESP32H2ROM: i } = await import("./esp32h2-DFlDPjvF.mjs");
       return new i();
     }
     case 9: {
-      const { ESP32S3ROM: i } = await import("./esp32s3-bLLyCkC3.mjs");
+      const { ESP32S3ROM: i } = await import("./esp32s3-Dny0wUJt.mjs");
       return new i();
     }
     case 1990: {
-      const { ESP32S2ROM: i } = await import("./esp32s2--CyMGb7t.mjs");
+      const { ESP32S2ROM: i } = await import("./esp32s2-yA6BgqOG.mjs");
       return new i();
     }
     case 4293968129: {
@@ -2786,7 +2786,7 @@ async function yr(e) {
     case 0:
     case 182303440:
     case 117676761: {
-      const { ESP32P4ROM: i } = await import("./esp32p4-wp2NNeUi.mjs");
+      const { ESP32P4ROM: i } = await import("./esp32p4-phnur2h1.mjs");
       return new i();
     }
     default:
@@ -4088,9 +4088,9 @@ async function Or(e) {
       await e.close();
     } catch {
     }
-  }, d = async (_) => (t.remove(), await u(), _), f = async () => {
+  }, d = async (_) => (t.remove(), await u(), _), f = () => {
     const _ = i.nextUrl;
-    if (await u(), n.textContent = _ ? "Wi-Fi settings sent. WLED reported this address:" : "Wi-Fi settings sent. The controller is connecting to your network.", a.disabled = s.disabled = !0, r.innerHTML = "", _)
+    if (n.textContent = _ ? "Wi-Fi settings sent. WLED reported this address:" : "Wi-Fi settings sent. The controller is connecting to your network.", a.disabled = s.disabled = !0, r.innerHTML = "", _)
       try {
         const p = new URL(_);
         if (p.protocol !== "http:" && p.protocol !== "https:") throw new Error("Unsupported URL protocol");
@@ -4102,7 +4102,7 @@ async function Or(e) {
         n.textContent = "Wi-Fi settings sent. The controller is connecting to your network.";
       }
     const m = document.createElement("button");
-    m.textContent = "Done", m.style.cssText = "margin-left:auto;padding:9px 12px", m.addEventListener("click", () => t.remove()), r.appendChild(m);
+    m.textContent = "Done", m.style.cssText = "margin-left:auto;padding:9px 12px", m.addEventListener("click", () => t.remove()), r.appendChild(m), u();
   };
   h.addEventListener("click", () => d(!1)), l.addEventListener("click", async () => {
     if (o) return;
@@ -4118,7 +4118,7 @@ async function Or(e) {
         Fe(12e3).then(() => ({ pending: !0 }))
       ]);
       if (p.error) throw p.error;
-      B(p.acknowledged ? "Wi-Fi settings confirmed. Select the WLED address to open it." : "Wi-Fi settings sent. WLED is connecting to your network."), await f();
+      B(p.acknowledged ? "Wi-Fi settings confirmed. Select the WLED address to open it." : "Wi-Fi settings sent. WLED is connecting to your network."), f();
     } catch (m) {
       n.textContent = `Could not send Wi-Fi settings: ${(m == null ? void 0 : m.message) || m}`, c(!1);
     }
