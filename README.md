@@ -11,7 +11,7 @@ Browser-based WLED firmware installer for RGB2Go controllers.
 
 ## Flashing speed compatibility
 
-This site uses the direct `esptool-js` bundle in `vendor/rgb2go-direct-flasher/`, rather than the ESP Web Tools install-dialog wrapper. Both the ESP ROM connection and post-stub flashing use **115200 baud**. After flashing, the bundled Improv Wi-Fi wizard reopens the port at 115200 for network scan/manual SSID provisioning. This deliberate compatibility default avoids high-baud USB-UART failures observed on some CP210x controller batches. Keep every `.mjs` asset in that directory together when deploying.
+This site uses the direct `esptool-js` bundle in `vendor/rgb2go-direct-flasher/`, rather than the ESP Web Tools install-dialog wrapper. Both the ESP ROM connection and post-stub flashing use **115200 baud**. After flashing, the bundled Improv Wi-Fi wizard reopens the port at 115200 for network scan/manual SSID provisioning, then displays the URL reported by the controller and an **Open WLED in browser** link. This deliberate compatibility default avoids high-baud USB-UART failures observed on some CP210x controller batches. Keep every `.mjs` asset in that directory together when deploying.
 
 
 ## Supported Controllers
