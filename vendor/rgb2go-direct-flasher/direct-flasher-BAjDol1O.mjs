@@ -4167,7 +4167,7 @@ async function Or() {
         const S = c.slice(0, f).reduce((w, _) => w + _.data.length, 0), m = g / y * c[f].data.length, p = Math.floor((S + m) / u * 100);
         p !== d && (d = p, O(`Writing firmware: ${p}%…`));
       }
-    }), await $i(h, a), await a.disconnect(), a = void 0, O("Flash complete. Opening Wi-Fi setup…");
+    }), await $i(h, a), await a.disconnect(), a = void 0, O("Firmware written. Waiting five seconds for the controller to complete its first boot…"), await Fe(5e3), O("Flash complete. Opening Wi-Fi setup…");
     try {
       await Pr(l);
     } catch (f) {
