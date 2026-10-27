@@ -5,7 +5,11 @@
     {
       "chipFamily": "ESP8266",
       "parts": [
-        { "path": "WLED_0.14.4_Duo2Go_160.bin", "offset": 0 }
+        {
+          "path": "WLED_0.14.4_Duo2Go_160.bin",
+          "offset": 0,
+          "md5": "e7630b2fa9bcd58ea6f6ba5c8acfe09c"
+        }
       ]
     }
   ]

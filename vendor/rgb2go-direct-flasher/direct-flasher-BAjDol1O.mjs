@@ -4057,7 +4057,7 @@ async function Lr(e, i) {
   const r = await Promise.all(s.parts.map(async (o) => {
     const c = await fetch(new URL(o.path, t), { cache: "no-store" });
     if (!c.ok) throw new Error(`Firmware download failed (${c.status}).`);
-    return { data: new Uint8Array(await c.arrayBuffer()), address: o.offset };
+    return { data: new Uint8Array(await c.arrayBuffer()), address: o.offset, md5: o.md5 };
   }));
   return { manifest: a, parts: r, total: r.reduce((o, c) => o + c.data.length, 0) };
 }
@@ -4167,7 +4167,14 @@ async function Or() {
         const S = c.slice(0, f).reduce((w, _) => w + _.data.length, 0), m = g / y * c[f].data.length, p = Math.floor((S + m) / u * 100);
         p !== d && (d = p, O(`Writing firmware: ${p}%…`));
       }
-    }), await $i(h, a), await a.disconnect(), a = void 0, O("Flash complete. The serial port has been released so the controller can boot. Wait about 10 seconds, then connect to its WLED access point or use Ethernet.");
+    }), O("Verifying written firmware…");
+    for (let f = 0; f < c.length; f++) {
+      const g = c[f];
+      if (!g.md5) throw new Error("Selected manifest has no flash verification hash.");
+      const y = await h.flashMd5sum(g.address, g.data.length);
+      if (y !== g.md5) throw new Error(`Flash verification failed for part ${f + 1}. Expected ${g.md5}, read ${y}.`);
+    }
+    O("Flash verified. Restarting controller…"), await $i(h, a), await a.disconnect(), a = void 0, O("Flash complete. The serial port has been released so the controller can boot. Wait about 10 seconds, then connect to its WLED access point or use Ethernet.");
   } catch (l) {
     console.error(l), O(`Flash failed: ${(l == null ? void 0 : l.message) || l}`, !0);
   } finally {

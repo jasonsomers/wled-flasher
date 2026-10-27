@@ -5,10 +5,26 @@
     {
       "chipFamily": "ESP32",
       "parts": [
-        { "path": "../esp32-common/bootloader.bin", "offset": 4096 },
-        { "path": "../esp32-common/partitions.bin", "offset": 32768 },
-        { "path": "../esp32-common/boot_app0.bin",  "offset": 57344 },
-        { "path": "WLED_16.0.0_Matrix2Go.bin", "offset": 65536 }
+        {
+          "path": "../esp32-common/bootloader.bin",
+          "offset": 4096,
+          "md5": "98e3104e4eeb92461edc0a703b0ef4b7"
+        },
+        {
+          "path": "../esp32-common/partitions.bin",
+          "offset": 32768,
+          "md5": "c1d5097573699bef1d67aff92fa34ec0"
+        },
+        {
+          "path": "../esp32-common/boot_app0.bin",
+          "offset": 57344,
+          "md5": "e6327541e2dc394ca2c3b3280ac0f39f"
+        },
+        {
+          "path": "WLED_16.0.0_Matrix2Go.bin",
+          "offset": 65536,
+          "md5": "e0a53b1414c3f67facd5aab6d62e9905"
+        }
       ]
     }
   ]

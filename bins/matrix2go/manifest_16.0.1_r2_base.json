@@ -7,19 +7,23 @@
       "parts": [
         {
           "path": "../esp32-common/bootloader.bin",
-          "offset": 4096
+          "offset": 4096,
+          "md5": "98e3104e4eeb92461edc0a703b0ef4b7"
         },
         {
           "path": "../esp32-common/partitions.bin",
-          "offset": 32768
+          "offset": 32768,
+          "md5": "c1d5097573699bef1d67aff92fa34ec0"
         },
         {
           "path": "../esp32-common/boot_app0.bin",
-          "offset": 57344
+          "offset": 57344,
+          "md5": "e6327541e2dc394ca2c3b3280ac0f39f"
         },
         {
           "path": "WLED_16.0.1_Matrix2Go-r2.bin",
-          "offset": 65536
+          "offset": 65536,
+          "md5": "6602e0990868ebc7f0b112736b454507"
         }
       ]
     }
