@@ -4174,7 +4174,12 @@ async function Or() {
       const y = await h.flashMd5sum(g.address, g.data.length);
       if (y !== g.md5) throw new Error(`Flash verification failed for part ${f + 1}. Expected ${g.md5}, read ${y}.`);
     }
-    O("Flash verified. Restarting controller…"), await $i(h, a), await a.disconnect(), a = void 0, O("Flash complete. The serial port has been released so the controller can boot. Wait about 10 seconds, then connect to its WLED access point or use Ethernet.");
+    O("Flash verified. Restarting controller…"), await $i(h, a), await a.disconnect(), a = void 0, O("Firmware verified. Waiting five seconds for the controller to complete its first boot…"), await Fe(5e3), O("Flash complete. Opening Wi-Fi setup…");
+    try {
+      await Pr(l);
+    } catch (f) {
+      console.warn("Wi-Fi setup unavailable", f), O("Flash complete. Wi-Fi setup did not open; connect to the WLED access point or enter Wi-Fi in WLED settings.");
+    }
   } catch (l) {
     console.error(l), O(`Flash failed: ${(l == null ? void 0 : l.message) || l}`, !0);
   } finally {
